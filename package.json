@@ -4,17 +4,17 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "@types/jest": "^26.0.24",
-    "@types/node": "^12.20.33",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.4.2",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.1",
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "typescript": "^4.4.4",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,7 +43,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.0.1",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^14.0.1",
     "eslint-config-prettier": "^8.3.0",
@@ -53,11 +53,11 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.4.1",
-    "eslint-config-airbnb-base": "14.2.0",
-    "eslint-plugin-flowtype": "3.13.0",
-    "stylelint": "10.0.0",
-    "stylelint-config-recommended": "2.2.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-plugin-flowtype": "6.1.1",
+    "stylelint": "13.13.1",
+    "stylelint-config-recommended": "5.0.0",
     "stylelint-config-styled-components": "0.1.1",
-    "stylelint-processor-styled-components": "1.8.0"
+    "stylelint-processor-styled-components": "1.10.0"
   }
 }
