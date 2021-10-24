@@ -3,20 +3,20 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 
-const StartPageWrapper = styled.div`
+const PeoplePageWrapper = styled.div`
   min-height: 70vh;
 `;
 
-const StartPage: FC = () => {
+const PeoplePage: FC = () => {
   return (
     <>
       <Header />
-      <StartPageWrapper>
-        <h2>START PAGE</h2>
-      </StartPageWrapper>
+      <PeoplePageWrapper>
+        <h2>PeoplePage</h2>
+      </PeoplePageWrapper>
       <Footer />
     </>
   );
 };
 
-export default StartPage;
+export default PeoplePage;
