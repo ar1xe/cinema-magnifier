@@ -44,5 +44,9 @@ export const BtnsNavBar = styled.div`
     border-color: #8f3c3c;
     background-color: #90cdfb;
     cursor: pointer;
+    a {
+      color: #002640;
+      text-decoration: none;
+    }
   }
 `;

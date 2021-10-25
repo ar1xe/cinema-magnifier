@@ -32,8 +32,12 @@ const Header: FC = () => {
           </span>
         </NavBar>
         <BtnsNavBar>
-          <button type="button">Sig In</button>
-          <button type="button">Registration</button>
+          <Link to={"/signin"}>
+            <button type="button">Sign In</button>
+          </Link>
+          <Link to={"/registration"}>
+            <button type="button">Registration</button>
+          </Link>
         </BtnsNavBar>
       </HeaderContainer>
     </HeaderWrapper>
