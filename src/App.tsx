@@ -6,6 +6,7 @@ import SerialsPage from "./pages/serialsPage/SerialsPage";
 import SignInPage from "./pages/signInPage/SignInPage";
 import StartPage from "./pages/startPage/StartPage";
 import YetPage from "./pages/yetPage/YetPage";
+import "antd/dist/antd.css";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function App() {
