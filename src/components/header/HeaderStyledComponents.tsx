@@ -40,7 +40,7 @@ export const BtnsNavBar = styled.div`
     font-family: "Roboto", sans-serif;
     font-size: 12px;
     color: #002640;
-    border-radius: 20px;
+    border-radius: 30px;
     border-color: #8f3c3c;
     background-color: #90cdfb;
     cursor: pointer;

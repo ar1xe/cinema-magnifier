@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import { Form, Input, Button, Checkbox } from "antd";
+import { Link } from "react-router-dom";
 
 const SignInPageWrapper = styled.div`
   min-height: 70vh;
@@ -12,7 +13,7 @@ const SignInPageWrapper = styled.div`
 `;
 
 const StyledBtn = styled(Button)`
-  background-color: red;
+  margin-left: 15px;
 `;
 
 const SignInPage: FC = () => {
@@ -32,7 +33,6 @@ const SignInPage: FC = () => {
     <>
       <Header />
       <SignInPageWrapper>
-        <StyledBtn type="primary">Primary Button</StyledBtn>
         <Form
           name="basic"
           labelCol={{ span: 8 }}
@@ -70,6 +70,9 @@ const SignInPage: FC = () => {
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
+            <Link to={"/registration"}>
+              <StyledBtn type="primary">Registration</StyledBtn>
+            </Link>
           </Form.Item>
         </Form>
       </SignInPageWrapper>

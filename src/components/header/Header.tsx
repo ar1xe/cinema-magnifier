@@ -7,6 +7,7 @@ import {
   NavBar,
   BtnsNavBar,
 } from "../header/HeaderStyledComponents";
+import { Button } from "antd";
 
 const Header: FC = () => {
   return (
@@ -33,10 +34,12 @@ const Header: FC = () => {
         </NavBar>
         <BtnsNavBar>
           <Link to={"/signin"}>
-            <button type="button">Sign In</button>
+            {/* <button type="button">Sign In</button> */}
+            <Button type="primary">Sign In</Button>
           </Link>
           <Link to={"/registration"}>
-            <button type="button">Registration</button>
+            {/* <button type="button">Registration</button> */}
+            <Button type="primary">Registration</Button>
           </Link>
         </BtnsNavBar>
       </HeaderContainer>

@@ -5,6 +5,9 @@ import Header from "../../components/header/Header";
 
 const PeoplePageWrapper = styled.div`
   min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const PeoplePage: FC = () => {
