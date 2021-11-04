@@ -57,7 +57,7 @@ const RegistrationPage: FC = () => {
           width: 70,
         }}
       >
-        <Option value="86">+7</Option>
+        <Option value="7">+7</Option>
       </Select>
     </Form.Item>
   );
@@ -71,10 +71,10 @@ const RegistrationPage: FC = () => {
           form={form}
           name="register"
           onFinish={onFinish}
-          initialValues={{
-            residence: ["zhejiang", "hangzhou", "xihu"],
-            prefix: "86",
-          }}
+          // initialValues={{
+          //   residence: ["zhejiang", "hangzhou", "xihu"],
+          //   prefix: "86",
+          // }}
           scrollToFirstError
         >
           <Form.Item
