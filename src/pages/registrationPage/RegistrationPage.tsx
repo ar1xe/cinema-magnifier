@@ -46,7 +46,7 @@ const tailFormItemLayout = {
 const RegistrationPage: FC = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: unknown) => {
+  const onFinish = (values: string) => {
     console.log("Received values of form: ", values);
   };
 
