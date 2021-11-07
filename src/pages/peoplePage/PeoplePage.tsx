@@ -1,8 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import axios from "axios";
+// import axios from "axios";
+import PeopleService from "../../services/PeopleServices";
+import PeopleCard from "./PeopleCard";
 
 const PeoplePageWrapper = styled.div`
   min-height: 70vh;
@@ -11,19 +13,30 @@ const PeoplePageWrapper = styled.div`
   align-items: center;
 `;
 
-const BASE_URL = "https://api.themoviedb.org/3/";
-const URL_PEOPLE = "person/popular";
-const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
-
 const PeoplePage: FC = () => {
-  axios.get(BASE_URL + URL_PEOPLE + API_KEY).then((response) => {
-    console.log(response.data);
-  });
+  const [people, setPeople] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const curentPeople = await PeopleService.getPeoples();
+        setPeople(curentPeople.results);
+        console.log(curentPeople);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [setPeople]);
+
   return (
     <>
       <Header />
       <PeoplePageWrapper>
         <h2>PeoplePage</h2>
+        <div>
+          {people.map(({ name, profile_path, id }) => (
+            <PeopleCard name={name} imgURL={profile_path} key={id} id={id} />
+          ))}
+        </div>
       </PeoplePageWrapper>
       <Footer />
     </>

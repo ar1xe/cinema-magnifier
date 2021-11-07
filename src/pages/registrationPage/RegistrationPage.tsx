@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import { Form, Input, Select, Checkbox, Button } from "antd";
+import axios from "axios";
 const { Option } = Select;
 
 const RegistrationPageWrapper = styled.div`
@@ -46,8 +47,9 @@ const tailFormItemLayout = {
 const RegistrationPage: FC = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: string) => {
+  const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
+    axios.post("http://localhost:3333/registration", { ...values });
   };
 
   const prefixSelector = (
@@ -71,10 +73,6 @@ const RegistrationPage: FC = () => {
           form={form}
           name="register"
           onFinish={onFinish}
-          // initialValues={{
-          //   residence: ["zhejiang", "hangzhou", "xihu"],
-          //   prefix: "86",
-          // }}
           scrollToFirstError
         >
           <Form.Item
