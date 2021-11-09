@@ -1,30 +1,54 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import axios from "axios";
+import StartPageServices from "../../services/StartPageServices";
+import MovieCard from "./MovieCard";
 
 const StartPageWrapper = styled.div`
+  width: 100%;
   min-height: 70vh;
   display: flex;
   justify-content: center;
-  align-items: center;
 `;
 
-const BASE_URL = "https://api.themoviedb.org/3/";
-const MOVIES = "movie/top_rated";
-const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
+const MoviesContainer = styled.div`
+  width: 1050px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
 
 const StartPage: FC = () => {
-  axios.get(BASE_URL + MOVIES + API_KEY).then((response) => {
-    console.log(response.data);
-  });
+  const [movies, setMovies] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const curentMovies = await StartPageServices.getMovies();
+        setMovies(curentMovies.results);
+        console.log(curentMovies);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [setMovies]);
 
   return (
     <>
       <Header />
       <StartPageWrapper>
-        <h2>START PAGE</h2>
+        <MoviesContainer>
+          {movies.map(({ title, poster_path, popularity, id, overview }) => (
+            <MovieCard
+              name={title}
+              imgURL={poster_path}
+              rating={popularity}
+              description={overview}
+              key={id}
+              id={id}
+            />
+          ))}
+        </MoviesContainer>
       </StartPageWrapper>
       <Footer />
     </>

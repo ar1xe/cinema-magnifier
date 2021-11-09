@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import { Form, Input, Select, Checkbox, Button } from "antd";
-import axios from "axios";
+// import axios from "axios";
 const { Option } = Select;
 
 const RegistrationPageWrapper = styled.div`
@@ -49,7 +49,7 @@ const RegistrationPage: FC = () => {
 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
-    axios.post("http://localhost:3333/registration", { ...values });
+    // axios.post("http://localhost:3333/registration", { ...values });
   };
 
   const prefixSelector = (

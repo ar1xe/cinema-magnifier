@@ -18,11 +18,11 @@ const users = [];
 //   res.status(200).json("Server working");
 // });
 
-app.post("/registration", (req, res) => {
-  console.log(req.body);
-  if (req.body.email) users.push(req.body);
-  res.status(200).json("registration");
-});
+// app.post("/registration", (req, res) => {
+//   console.log(req.body);
+//   if (req.body.email) users.push(req.body);
+//   res.status(200).json("registration");
+// });
 
 app.listen(PORT, () => {
   console.log("Server has been started... PORT 3333");

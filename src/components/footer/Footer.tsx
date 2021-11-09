@@ -19,8 +19,6 @@ const Footer: FC = () => {
         <img src={Mail} alt="logo" width={80} height={80} />
         <img src={Reddit} alt="logo" width={80} height={80} />
         <img src={Setting} alt="logo" width={80} height={80} />
-
-        <div></div>
       </FooterContainer>
     </FooterWrapper>
   );
