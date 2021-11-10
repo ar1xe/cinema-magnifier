@@ -16,7 +16,7 @@ const MovieCardWrapper = styled.div`
   width: 300px;
   display: flex;
   flex-direction: column;
-  margin: 40px 0 20px 0;
+  margin: 40px 0 40px 0;
   border: solid 1.9px;
   border-radius: 15px;
   transition: all 3s;

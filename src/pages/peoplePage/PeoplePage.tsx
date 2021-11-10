@@ -26,14 +26,33 @@ const PeoplePage: FC = () => {
     })();
   }, [setPeople]);
 
+  // const [paints, setPaints] = useState([]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const curentPaints = await PeopleService.getPeoples();
+  //       setPaints(curentPaints.results.know_for);
+  //       console.log(curentPaints);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [setPaints]);
+
   return (
     <>
       <Header />
       <PeoplePageWrapper>
         <h2>PeoplePage</h2>
         <div>
-          {people.map(({ name, profile_path, id }) => (
-            <PeopleCard name={name} imgURL={profile_path} key={id} id={id} />
+          {people.map(({ name, profile_path, id, know_for }) => (
+            <PeopleCard
+              name={name}
+              imgURL={profile_path}
+              key={id}
+              id={id}
+              // paintings={know_for}
+            />
           ))}
         </div>
       </PeoplePageWrapper>

@@ -3,6 +3,8 @@ import axios from "axios";
 const BASE_URL = "https://api.themoviedb.org/3/";
 const URL_PEOPLE = "person/popular";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
+// page number for pagination
+// const NUM_PAGE = "&page=1";
 
 export default class PeopleService {
   static async getPeoples() {
