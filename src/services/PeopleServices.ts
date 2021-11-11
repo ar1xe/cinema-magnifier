@@ -16,4 +16,14 @@ export default class PeopleService {
       return await Promise.reject(error);
     }
   }
+
+  static async getMoviePictures() {
+    try {
+      const response = await axios.get(BASE_URL + URL_PEOPLE + API_KEY);
+      return await Promise.resolve(response.data);
+    } catch (error) {
+      console.log(error);
+      return await Promise.reject(error);
+    }
+  }
 }
