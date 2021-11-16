@@ -4,10 +4,10 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import PeopleService from "../../services/PeopleServices";
 import PeopleCard from "./PeopleCard";
-import PeopleMoviePictures from "./PeopleMoviePictures";
+// import PeopleMoviePictures from "./PeopleMoviePictures";
 
 const PeoplePageWrapper = styled.div`
-  min-height: 70vh;
+  /* min-height: 70vh; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,30 +22,36 @@ const PeoplePageContainer = styled.div`
 
 const PeoplePage: FC = () => {
   const [people, setPeople] = useState([]);
+  // const [moviePictures, setMoviePictures] = useState([]);
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
     (async () => {
       try {
-        const curentPeople = await PeopleService.getPeoples();
+        const curentPeople = await PeopleService.getPeoples(page);
+
         setPeople(curentPeople.results);
+
+        // setPeople((prevState) => [...prevState, ...curentPeople]);
+
+        // setPeople((prevState) => prevState.concat(curentPeople));
+
         console.log(curentPeople);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [setPeople]);
+  }, [setPeople, page]);
 
-  const [moviePictures, setMoviePictures] = useState([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const curentPaints = await PeopleService.getMoviePictures();
-        setMoviePictures(curentPaints.results);
-        console.log(curentPaints.results[0].known_for[0].title);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [setMoviePictures]);
+  const changePagePlus = () => {
+    setPage(page + 1);
+  };
+
+  const changePageMinus = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
 
   return (
     <>
@@ -55,12 +61,18 @@ const PeoplePage: FC = () => {
           {people.map(({ name, profile_path, id }) => (
             <PeopleCard name={name} imgURL={profile_path} key={id} id={id} />
           ))}
-          <div>
+          {/* <div>
             {moviePictures.map(({ id, title }) => (
               <PeopleMoviePictures key={id} nameMovie={title} id={id} />
             ))}
-          </div>
+          </div> */}
         </PeoplePageContainer>
+        <button type="button" onClick={changePagePlus}>
+          ++++
+        </button>
+        <button type="button" onClick={changePageMinus}>
+          ----
+        </button>
       </PeoplePageWrapper>
       <Footer />
     </>
