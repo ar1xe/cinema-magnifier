@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 
-interface Tprops {
+export interface CardItem {
   id: string;
   name: string;
   imgURL: string;
@@ -41,7 +41,7 @@ const NameContainer = styled.div`
   }
 `;
 
-const PeopleCard: FC<Tprops> = ({ name, imgURL }) => {
+const PeopleCard: FC<CardItem> = ({ name, imgURL }) => {
   return (
     <PeopleCardWrapper>
       <div>

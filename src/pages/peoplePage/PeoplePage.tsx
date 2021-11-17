@@ -20,7 +20,13 @@ const PeoplePageContainer = styled.div`
   justify-content: space-around;
 `;
 
-const PeoplePage: FC = () => {
+interface People {
+  name: string[];
+  profile_path: string[];
+  id: string[];
+}
+
+const PeoplePage: FC<People> = () => {
   const [people, setPeople] = useState([]);
   // const [moviePictures, setMoviePictures] = useState([]);
   const [page, setPage] = useState(1);
@@ -29,14 +35,10 @@ const PeoplePage: FC = () => {
     (async () => {
       try {
         const curentPeople = await PeopleService.getPeoples(page);
-
         setPeople(curentPeople.results);
-
         // setPeople((prevState) => [...prevState, ...curentPeople]);
-
-        // setPeople((prevState) => prevState.concat(curentPeople));
-
-        console.log(curentPeople);
+        setPeople((prevState) => prevState.concat(curentPeople));
+        console.log(curentPeople.results);
       } catch (error) {
         console.log(error);
       }
