@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import PeopleService from "../../services/PeopleServices";
 import PeopleCard from "./PeopleCard";
-// import PeopleMoviePictures from "./PeopleMoviePictures";
 
 const PeoplePageWrapper = styled.div`
   /* min-height: 70vh; */
@@ -20,39 +19,35 @@ const PeoplePageContainer = styled.div`
   justify-content: space-around;
 `;
 
-interface People {
-  name: string[];
-  profile_path: string[];
-  id: string[];
+interface GetPeoplesInterface {
+  page: number;
+  results: People[];
 }
 
-const PeoplePage: FC<People> = () => {
-  const [people, setPeople] = useState([]);
+export type People = {
+  id: string;
+  name: string;
+  profile_path: string;
+};
+
+const PeoplePage: FC = () => {
+  const [people, setPeople] = useState<People[]>([]);
   // const [moviePictures, setMoviePictures] = useState([]);
   const [page, setPage] = useState(1);
 
+  const fetchPeople = useCallback(async (numPage) => {
+    const curentPeople: GetPeoplesInterface = await PeopleService.getPeoples(
+      numPage
+    );
+    setPeople((prevState: People[]) => prevState.concat(curentPeople.results));
+  }, []);
+
   useEffect(() => {
-    (async () => {
-      try {
-        const curentPeople = await PeopleService.getPeoples(page);
-        setPeople(curentPeople.results);
-        // setPeople((prevState) => [...prevState, ...curentPeople]);
-        setPeople((prevState) => prevState.concat(curentPeople));
-        console.log(curentPeople.results);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [setPeople, page]);
+    fetchPeople(page);
+  }, [page, fetchPeople]);
 
   const changePagePlus = () => {
     setPage(page + 1);
-  };
-
-  const changePageMinus = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
   };
 
   return (
@@ -61,7 +56,12 @@ const PeoplePage: FC<People> = () => {
       <PeoplePageWrapper>
         <PeoplePageContainer>
           {people.map(({ name, profile_path, id }) => (
-            <PeopleCard name={name} imgURL={profile_path} key={id} id={id} />
+            <PeopleCard
+              name={name}
+              key={id}
+              id={id}
+              profile_path={profile_path}
+            />
           ))}
           {/* <div>
             {moviePictures.map(({ id, title }) => (
@@ -71,9 +71,6 @@ const PeoplePage: FC<People> = () => {
         </PeoplePageContainer>
         <button type="button" onClick={changePagePlus}>
           ++++
-        </button>
-        <button type="button" onClick={changePageMinus}>
-          ----
         </button>
       </PeoplePageWrapper>
       <Footer />

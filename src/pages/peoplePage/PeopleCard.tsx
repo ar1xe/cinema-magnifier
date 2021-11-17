@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { People } from "./PeoplePage";
 
-export interface CardItem {
-  id: string;
-  name: string;
-  imgURL: string;
-  // paintings: string;
-}
+// export type CardItem = {
+//   id: string;
+//   name: string;
+//   imgURL: string;
+// };
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
@@ -41,11 +41,11 @@ const NameContainer = styled.div`
   }
 `;
 
-const PeopleCard: FC<CardItem> = ({ name, imgURL }) => {
+const PeopleCard: FC<People> = ({ name, profile_path }) => {
   return (
     <PeopleCardWrapper>
       <div>
-        <Img src={BASE_URL + imgURL + API_KEY} width={160} height={240} />
+        <Img src={BASE_URL + profile_path + API_KEY} width={160} height={240} />
       </div>
       <NameContainer>{name}</NameContainer>
     </PeopleCardWrapper>
