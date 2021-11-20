@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -19,19 +19,37 @@ const MoviesContainer = styled.div`
   justify-content: space-around;
 `;
 
+interface GetMovieInterface {
+  page: number;
+  results: Movies[];
+}
+
+export interface Movies {
+  id: string;
+  title: string;
+  popularity: number;
+  overview: string;
+  poster_path: string;
+}
+
 const StartPage: FC = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movies[]>([]);
+  const [page, setPage] = useState(1);
+
+  const fetchMovies = useCallback(async (numPage) => {
+    const currentMovie: GetMovieInterface = await StartPageServices.getMovies(
+      numPage
+    );
+    setMovies((prevState: Movies[]) => prevState.concat(currentMovie.results));
+  }, []);
+
   useEffect(() => {
-    (async () => {
-      try {
-        const curentMovies = await StartPageServices.getMovies();
-        setMovies(curentMovies.results);
-        console.log(curentMovies);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [setMovies]);
+    fetchMovies(page);
+  }, [page, fetchMovies]);
+
+  const changePagePlus = () => {
+    setPage(page + 1);
+  };
 
   return (
     <>
@@ -49,6 +67,7 @@ const StartPage: FC = () => {
             />
           ))}
         </MoviesContainer>
+        <button type="button" onClick={changePagePlus}></button>
       </StartPageWrapper>
       <Footer />
     </>

@@ -4,12 +4,14 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import PeopleService from "../../services/PeopleServices";
 import PeopleCard from "./PeopleCard";
+import { Button } from "antd";
 
 const PeoplePageWrapper = styled.div`
   /* min-height: 70vh; */
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 const PeoplePageContainer = styled.div`
@@ -17,6 +19,11 @@ const PeoplePageContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+`;
+
+const StyleBtn = styled(Button)`
+  width: 250px;
+  margin-bottom: 30px;
 `;
 
 interface GetPeoplesInterface {
@@ -32,7 +39,6 @@ export type People = {
 
 const PeoplePage: FC = () => {
   const [people, setPeople] = useState<People[]>([]);
-  // const [moviePictures, setMoviePictures] = useState([]);
   const [page, setPage] = useState(1);
 
   const fetchPeople = useCallback(async (numPage) => {
@@ -63,15 +69,12 @@ const PeoplePage: FC = () => {
               profile_path={profile_path}
             />
           ))}
-          {/* <div>
-            {moviePictures.map(({ id, title }) => (
-              <PeopleMoviePictures key={id} nameMovie={title} id={id} />
-            ))}
-          </div> */}
         </PeoplePageContainer>
-        <button type="button" onClick={changePagePlus}>
-          ++++
-        </button>
+        <div>
+          <StyleBtn type="primary" onClick={changePagePlus}>
+            More...
+          </StyleBtn>
+        </div>
       </PeoplePageWrapper>
       <Footer />
     </>
