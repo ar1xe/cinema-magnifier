@@ -4,12 +4,15 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import StartPageServices from "../../services/StartPageServices";
 import MovieCard from "./MovieCard";
+import { Button } from "antd";
 
 const StartPageWrapper = styled.div`
   width: 100%;
-  min-height: 70vh;
+  /* min-height: 70vh; */
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const MoviesContainer = styled.div`
@@ -17,6 +20,11 @@ const MoviesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+`;
+
+const StyleBtn = styled(Button)`
+  width: 250px;
+  margin-bottom: 30px;
 `;
 
 interface GetMovieInterface {
@@ -67,7 +75,11 @@ const StartPage: FC = () => {
             />
           ))}
         </MoviesContainer>
-        <button type="button" onClick={changePagePlus}></button>
+        <div>
+          <StyleBtn type="primary" onClick={changePagePlus}>
+            More...
+          </StyleBtn>
+        </div>
       </StartPageWrapper>
       <Footer />
     </>
