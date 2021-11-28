@@ -5,6 +5,15 @@ import Header from "../../components/header/Header";
 import StartPageServices from "../../services/StartPageServices";
 import MovieCard from "./MovieCard";
 import { Button } from "antd";
+import {
+  fetchMoviesBegin,
+  fetchMoviesEnd,
+  fetchMoviesError,
+  fetchMoviesSuccess,
+} from "../../redux/slices/moviesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getMovies } from "../../redux/selectors/moviesSelectors";
+import { RootState } from "../../redux/store";
 
 const StartPageWrapper = styled.div`
   width: 100%;
@@ -41,15 +50,29 @@ export interface Movies {
 }
 
 const StartPage: FC = () => {
-  const [movies, setMovies] = useState<Movies[]>([]);
+  const dispatch = useDispatch();
+  const movies: Movies[] = useSelector(getMovies);
+  // const [movies, setMovies] = useState<Movies[]>([]);
+  const moviesLoading: boolean = useSelector(
+    (state: RootState) => state.moviesState.moviesLoading
+  );
   const [page, setPage] = useState(1);
 
-  const fetchMovies = useCallback(async (numPage) => {
-    const currentMovie: GetMovieInterface = await StartPageServices.getMovies(
-      numPage
-    );
-    setMovies((prevState: Movies[]) => prevState.concat(currentMovie.results));
-  }, []);
+  const fetchMovies = useCallback(
+    async (numPage) => {
+      try {
+        dispatch(fetchMoviesBegin(true));
+        const currentMovie: GetMovieInterface =
+          await StartPageServices.getMovies(numPage);
+        dispatch(fetchMoviesSuccess(currentMovie.results));
+      } catch (error) {
+        dispatch(fetchMoviesError(error as string));
+      } finally {
+        dispatch(fetchMoviesEnd());
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     fetchMovies(page);
@@ -64,16 +87,20 @@ const StartPage: FC = () => {
       <Header />
       <StartPageWrapper>
         <MoviesContainer>
-          {movies.map(({ title, poster_path, popularity, id, overview }) => (
-            <MovieCard
-              name={title}
-              imgURL={poster_path}
-              rating={popularity}
-              description={overview}
-              key={id}
-              id={id}
-            />
-          ))}
+          {moviesLoading ? (
+            <div>LOADING...</div>
+          ) : (
+            movies.map(({ title, poster_path, popularity, id, overview }) => (
+              <MovieCard
+                name={title}
+                imgURL={poster_path}
+                rating={popularity}
+                description={overview}
+                key={id}
+                id={id}
+              />
+            ))
+          )}
         </MoviesContainer>
         <div>
           <StyleBtn type="primary" onClick={changePagePlus}>

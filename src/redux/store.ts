@@ -1,8 +1,17 @@
-import { configureStore, createReducer } from "@reduxjs/toolkit";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+
+import moviesReducer from "./slices/moviesSlice";
+import createSagaMiddleware from "redux-saga";
+
+const sagaMiddleware = createSagaMiddleware();
+const middlewares = [sagaMiddleware];
+const middleware = [...middlewares];
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    moviesState: moviesReducer,
+  },
+  middleware,
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
