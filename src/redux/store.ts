@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import moviesReducer from "./slices/moviesSlice";
 import createSagaMiddleware from "redux-saga";
+import saga from "../redux/saga/sagas/movieSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
@@ -13,6 +14,8 @@ export const store = configureStore({
   },
   middleware,
 });
+
+sagaMiddleware.run(saga);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

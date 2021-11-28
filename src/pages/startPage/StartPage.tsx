@@ -5,15 +5,14 @@ import Header from "../../components/header/Header";
 import StartPageServices from "../../services/StartPageServices";
 import MovieCard from "./MovieCard";
 import { Button } from "antd";
-import {
-  fetchMoviesBegin,
-  fetchMoviesEnd,
-  fetchMoviesError,
-  fetchMoviesSuccess,
-} from "../../redux/slices/moviesSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getMovies } from "../../redux/selectors/moviesSelectors";
 import { RootState } from "../../redux/store";
+import {
+  fetchMovies,
+  movieActions,
+} from "../../redux/saga/actions/movieActions";
 
 const StartPageWrapper = styled.div`
   width: 100%;
@@ -36,7 +35,7 @@ const StyleBtn = styled(Button)`
   margin-bottom: 30px;
 `;
 
-interface GetMovieInterface {
+export interface GetMovieInterface {
   page: number;
   results: Movies[];
 }
@@ -58,25 +57,28 @@ const StartPage: FC = () => {
   );
   const [page, setPage] = useState(1);
 
-  const fetchMovies = useCallback(
-    async (numPage) => {
-      try {
-        dispatch(fetchMoviesBegin(true));
-        const currentMovie: GetMovieInterface =
-          await StartPageServices.getMovies(numPage);
-        dispatch(fetchMoviesSuccess(currentMovie.results));
-      } catch (error) {
-        dispatch(fetchMoviesError(error as string));
-      } finally {
-        dispatch(fetchMoviesEnd());
-      }
-    },
-    [dispatch]
-  );
+  // const fetchMovies = useCallback(
+  //   async (numPage) => {
+  //     try {
+  //       dispatch(fetchMoviesBegin(true));
+  //       const currentMovie: GetMovieInterface =
+  //         await StartPageServices.getMovies(numPage);
+  //       dispatch(fetchMoviesSuccess(currentMovie.results));
+  //     } catch (error) {
+  //       dispatch(fetchMoviesError(error as string));
+  //     } finally {
+  //       dispatch(fetchMoviesEnd());
+  //     }
+  //   },
+  //   [dispatch]
+  // );
 
   useEffect(() => {
-    fetchMovies(page);
-  }, [page, fetchMovies]);
+    // console.log(fetchMovies());
+
+    dispatch({ type: fetchMovies.type, payload: page });
+    // fetchMovies(page);
+  }, [page, dispatch]);
 
   const changePagePlus = () => {
     setPage(page + 1);

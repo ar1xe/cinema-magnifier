@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Movies } from "../../pages/startPage/StartPage";
 
 interface MoviesState {
@@ -29,7 +29,7 @@ const moviesSlice = createSlice({
       ...state,
       moviesLoading: false,
     }),
-    fetchMoviesError: (state, action: PayloadAction<string>) => ({
+    fetchMoviesFailure: (state, action: PayloadAction<string>) => ({
       ...state,
       error: action.payload,
     }),
@@ -40,6 +40,6 @@ export const {
   fetchMoviesBegin,
   fetchMoviesSuccess,
   fetchMoviesEnd,
-  fetchMoviesError,
+  fetchMoviesFailure,
 } = moviesSlice.actions;
 export default moviesSlice.reducer;
