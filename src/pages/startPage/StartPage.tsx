@@ -9,10 +9,7 @@ import { Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovies } from "../../redux/selectors/moviesSelectors";
 import { RootState } from "../../redux/store";
-import {
-  fetchMovies,
-  movieActions,
-} from "../../redux/saga/actions/movieActions";
+import { fetchMovies } from "../../redux/saga/actions/movieActions";
 
 const StartPageWrapper = styled.div`
   width: 100%;

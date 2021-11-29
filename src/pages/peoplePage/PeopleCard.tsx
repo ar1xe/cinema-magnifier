@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { People } from "./PeoplePage";
+import { Peoples } from "./PeoplePage";
 
 // export type CardItem = {
 //   id: string;
@@ -41,7 +41,7 @@ const NameContainer = styled.div`
   }
 `;
 
-const PeopleCard: FC<People> = ({ name, profile_path }) => {
+const PeopleCard: FC<Peoples> = ({ name, profile_path }) => {
   return (
     <PeopleCardWrapper>
       <div>

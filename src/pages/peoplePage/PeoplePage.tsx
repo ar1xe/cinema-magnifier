@@ -1,10 +1,14 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import PeopleService from "../../services/PeopleServices";
+// import PeopleService from "../../services/PeopleServices";
 import PeopleCard from "./PeopleCard";
 import { Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { fetchPeoples } from "../../redux/saga/actions/peoplesActions";
+import { getPeoples } from "../../redux/selectors/peoplesSelectors";
 
 const PeoplePageWrapper = styled.div`
   /* min-height: 70vh; */
@@ -26,31 +30,36 @@ const StyleBtn = styled(Button)`
   margin-bottom: 30px;
 `;
 
-interface GetPeoplesInterface {
+export interface GetPeoplesInterface {
   page: number;
-  results: People[];
+  results: Peoples[];
 }
 
-export type People = {
+export type Peoples = {
   id: string;
   name: string;
   profile_path: string;
 };
 
 const PeoplePage: FC = () => {
-  const [people, setPeople] = useState<People[]>([]);
+  const dispatch = useDispatch();
+  const people: Peoples[] = useSelector(getPeoples);
+  // const [people, setPeople] = useState<People[]>([]);
+  const peoplesLoading: boolean = useSelector(
+    (state: RootState) => state.peoplesState.peoplesLoading
+  );
   const [page, setPage] = useState(1);
 
-  const fetchPeople = useCallback(async (numPage) => {
-    const curentPeople: GetPeoplesInterface = await PeopleService.getPeoples(
-      numPage
-    );
-    setPeople((prevState: People[]) => prevState.concat(curentPeople.results));
-  }, []);
+  // const fetchPeople = useCallback(async (numPage) => {
+  //   const curentPeople: GetPeoplesInterface = await PeopleService.getPeoples(
+  //     numPage
+  //   );
+  //   setPeople((prevState: People[]) => prevState.concat(curentPeople.results));
+  // }, []);
 
   useEffect(() => {
-    fetchPeople(page);
-  }, [page, fetchPeople]);
+    dispatch({ type: fetchPeoples.type, payload: page });
+  }, [page, dispatch]);
 
   const changePagePlus = () => {
     setPage(page + 1);
@@ -61,14 +70,18 @@ const PeoplePage: FC = () => {
       <Header />
       <PeoplePageWrapper>
         <PeoplePageContainer>
-          {people.map(({ name, profile_path, id }) => (
-            <PeopleCard
-              name={name}
-              key={id}
-              id={id}
-              profile_path={profile_path}
-            />
-          ))}
+          {peoplesLoading ? (
+            <div>LOADING...</div>
+          ) : (
+            people.map(({ name, profile_path, id }) => (
+              <PeopleCard
+                name={name}
+                key={id}
+                id={id}
+                profile_path={profile_path}
+              />
+            ))
+          )}
         </PeoplePageContainer>
         <div>
           <StyleBtn type="primary" onClick={changePagePlus}>

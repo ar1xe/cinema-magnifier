@@ -8,9 +8,10 @@ import {
 import StartPageServices from "../../../services/StartPageServices";
 import { GetMovieInterface } from "../../../pages/startPage/StartPage";
 import { fetchMovies } from "../actions/movieActions";
+
 // import { movieActions } from "../actions/movieActions";
 
-export function* fetchMoviesSaga(page: number) {
+export function* fetchMoviesSaga(page: any) {
   console.log(page);
   try {
     yield put(fetchMoviesBegin(true));
