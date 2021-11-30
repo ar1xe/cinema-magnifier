@@ -2,7 +2,6 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import StartPageServices from "../../services/StartPageServices";
 import MovieCard from "./MovieCard";
 import { Button } from "antd";
 
@@ -48,33 +47,13 @@ export interface Movies {
 const StartPage: FC = () => {
   const dispatch = useDispatch();
   const movies: Movies[] = useSelector(getMovies);
-  // const [movies, setMovies] = useState<Movies[]>([]);
   const moviesLoading: boolean = useSelector(
     (state: RootState) => state.moviesState.moviesLoading
   );
   const [page, setPage] = useState(1);
 
-  // const fetchMovies = useCallback(
-  //   async (numPage) => {
-  //     try {
-  //       dispatch(fetchMoviesBegin(true));
-  //       const currentMovie: GetMovieInterface =
-  //         await StartPageServices.getMovies(numPage);
-  //       dispatch(fetchMoviesSuccess(currentMovie.results));
-  //     } catch (error) {
-  //       dispatch(fetchMoviesError(error as string));
-  //     } finally {
-  //       dispatch(fetchMoviesEnd());
-  //     }
-  //   },
-  //   [dispatch]
-  // );
-
   useEffect(() => {
-    // console.log(fetchMovies());
-
     dispatch({ type: fetchMovies.type, payload: page });
-    // fetchMovies(page);
   }, [page, dispatch]);
 
   const changePagePlus = () => {
@@ -86,20 +65,16 @@ const StartPage: FC = () => {
       <Header />
       <StartPageWrapper>
         <MoviesContainer>
-          {moviesLoading ? (
-            <div>LOADING...</div>
-          ) : (
-            movies.map(({ title, poster_path, popularity, id, overview }) => (
-              <MovieCard
-                name={title}
-                imgURL={poster_path}
-                rating={popularity}
-                description={overview}
-                key={id}
-                id={id}
-              />
-            ))
-          )}
+          {movies.map(({ title, poster_path, popularity, id, overview }) => (
+            <MovieCard
+              name={title}
+              imgURL={poster_path}
+              rating={popularity}
+              description={overview}
+              key={id}
+              id={id}
+            />
+          ))}
         </MoviesContainer>
         <div>
           <StyleBtn type="primary" onClick={changePagePlus}>
