@@ -1,6 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useState } from "react";
 import styled from "styled-components";
-import { Peoples } from "./PeoplePage";
+import PeopleMoviePictures from "./PeopleMoviePictures";
+import { Peoples, PeopleWithFunction } from "./PeoplePage";
 
 // export type CardItem = {
 //   id: string;
@@ -41,13 +42,30 @@ const NameContainer = styled.div`
   }
 `;
 
-const PeopleCard: FC<Peoples> = ({ name, profile_path }) => {
+const PeopleCard: FC<PeopleWithFunction> = ({
+  name,
+  profile_path,
+  addFavoriteActor,
+  id,
+}) => {
+  const [liked, setLiked] = useState(false);
+  const onLikeClick = useCallback(() => {
+    setLiked((prevState) => !prevState);
+    addFavoriteActor(id);
+  }, [setLiked, addFavoriteActor, id]);
+
   return (
     <PeopleCardWrapper>
       <div>
         <Img src={BASE_URL + profile_path + API_KEY} width={160} height={240} />
       </div>
       <NameContainer>{name}</NameContainer>
+      <div>
+        <button type="button" title={String(liked)} onClick={onLikeClick}>
+          {String(liked)}
+        </button>
+      </div>
+      <span>{String(liked)}</span>
     </PeopleCardWrapper>
   );
 };
