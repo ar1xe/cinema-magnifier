@@ -1,3 +1,5 @@
 import { RootState } from "../store";
+import { Peoples } from "../../pages/peoplePage/PeoplePage";
 
-export const getPeoples = (state: RootState) => state.peoplesState.peoples;
+export const getPeoples = (state: RootState): Peoples[] =>
+  state.peoplesState.peoples;

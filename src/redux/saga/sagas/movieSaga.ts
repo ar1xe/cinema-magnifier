@@ -1,22 +1,20 @@
-import { call, takeEvery, put } from "redux-saga/effects";
+import { put, call, takeEvery } from "redux-saga/effects";
 import {
   fetchMoviesBegin,
+  fetchMoviesSuccess,
   fetchMoviesEnd,
   fetchMoviesFailure,
-  fetchMoviesSuccess,
 } from "../../slices/moviesSlice";
 import StartPageServices from "../../../services/StartPageServices";
 import { GetMovieInterface } from "../../../pages/startPage/StartPage";
 import { fetchMovies } from "../actions/movieActions";
 
-// import { movieActions } from "../actions/movieActions";
-
-export function* fetchMoviesSaga(page: any) {
-  console.log(page);
+export function* fetchMoviesWorker(action: ReturnType<typeof fetchMovies>) {
   try {
     yield put(fetchMoviesBegin(true));
-    const currentMovie: GetMovieInterface = yield call(() =>
-      StartPageServices.getMovies(page)
+    const currentMovie: GetMovieInterface = yield call(
+      StartPageServices.getMovies,
+      action.payload
     );
 
     yield put(fetchMoviesSuccess(currentMovie.results));
@@ -27,6 +25,4 @@ export function* fetchMoviesSaga(page: any) {
   }
 }
 
-export default function* rootSaga() {
-  yield takeEvery(fetchMovies.type, fetchMoviesSaga);
-}
+export const moviesWatcher = [takeEvery(fetchMovies.type, fetchMoviesWorker)];

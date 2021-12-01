@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-// import PeopleService from "../../services/PeopleServices";
 import PeopleCard from "./PeopleCard";
 import { Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +10,6 @@ import { fetchPeoples } from "../../redux/saga/actions/peoplesActions";
 import { getPeoples } from "../../redux/selectors/peoplesSelectors";
 
 const PeoplePageWrapper = styled.div`
-  /* min-height: 70vh; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,18 +42,10 @@ export type Peoples = {
 const PeoplePage: FC = () => {
   const dispatch = useDispatch();
   const people: Peoples[] = useSelector(getPeoples);
-  // const [people, setPeople] = useState<People[]>([]);
   const peoplesLoading: boolean = useSelector(
     (state: RootState) => state.peoplesState.peoplesLoading
   );
   const [page, setPage] = useState(1);
-
-  // const fetchPeople = useCallback(async (numPage) => {
-  //   const curentPeople: GetPeoplesInterface = await PeopleService.getPeoples(
-  //     numPage
-  //   );
-  //   setPeople((prevState: People[]) => prevState.concat(curentPeople.results));
-  // }, []);
 
   useEffect(() => {
     dispatch({ type: fetchPeoples.type, payload: page });

@@ -2,10 +2,8 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import StartPageServices from "../../services/StartPageServices";
 import MovieCard from "./MovieCard";
 import { Button } from "antd";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getMovies } from "../../redux/selectors/moviesSelectors";
 import { RootState } from "../../redux/store";
@@ -48,33 +46,13 @@ export interface Movies {
 const StartPage: FC = () => {
   const dispatch = useDispatch();
   const movies: Movies[] = useSelector(getMovies);
-  // const [movies, setMovies] = useState<Movies[]>([]);
   const moviesLoading: boolean = useSelector(
     (state: RootState) => state.moviesState.moviesLoading
   );
   const [page, setPage] = useState(1);
 
-  // const fetchMovies = useCallback(
-  //   async (numPage) => {
-  //     try {
-  //       dispatch(fetchMoviesBegin(true));
-  //       const currentMovie: GetMovieInterface =
-  //         await StartPageServices.getMovies(numPage);
-  //       dispatch(fetchMoviesSuccess(currentMovie.results));
-  //     } catch (error) {
-  //       dispatch(fetchMoviesError(error as string));
-  //     } finally {
-  //       dispatch(fetchMoviesEnd());
-  //     }
-  //   },
-  //   [dispatch]
-  // );
-
   useEffect(() => {
-    // console.log(fetchMovies());
-
     dispatch({ type: fetchMovies.type, payload: page });
-    // fetchMovies(page);
   }, [page, dispatch]);
 
   const changePagePlus = () => {

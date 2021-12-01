@@ -9,14 +9,13 @@ import PeopleService from "../../../services/PeopleServices";
 import { GetPeoplesInterface } from "../../../pages/peoplePage/PeoplePage";
 import { fetchPeoples } from "../actions/peoplesActions";
 
-export function* fetchPeoplesSaga(page: any) {
-  console.log(page);
+export function* fetchPeoplesWorker(action: ReturnType<typeof fetchPeoples>) {
   try {
     yield put(fetchPeoplesBegin(true));
-    const currentPeople: GetPeoplesInterface = yield call(() =>
-      PeopleService.getPeoples(page)
+    const currentPeople: GetPeoplesInterface = yield call(
+      PeopleService.getPeoples,
+      action.payload
     );
-
     yield put(fetchPeoplesSuccess(currentPeople.results));
   } catch (error) {
     yield put(fetchPeoplesFailure(error as string));
@@ -25,6 +24,4 @@ export function* fetchPeoplesSaga(page: any) {
   }
 }
 
-export default function* rootSaga() {
-  yield takeEvery(fetchPeoples.type, fetchPeoplesSaga);
-}
+export const peopleWatcher = [takeEvery(fetchPeoples.type, fetchPeoplesWorker)];
