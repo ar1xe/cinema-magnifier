@@ -1,13 +1,8 @@
 import React, { FC, useCallback, useState } from "react";
 import styled from "styled-components";
-import PeopleMoviePictures from "./PeopleMoviePictures";
-import { Peoples, PeopleWithFunction } from "./PeoplePage";
-
-// export type CardItem = {
-//   id: string;
-//   name: string;
-//   imgURL: string;
-// };
+import { Button } from "antd";
+import { CardPeopleProps } from "./PeoplePage";
+import FavoriteService from "../../services/FavoriteServices";
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
@@ -17,13 +12,13 @@ const PeopleCardWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 30px 15px 30px 15px;
-  border: solid 1.9px;
+  /* border: solid 1.9px;
   border-radius: 15px;
   transition: all 3s;
   :hover {
     transition: 3s;
     transform: scale(1.1);
-  }
+  } */
 `;
 
 const Img = styled.img`
@@ -35,24 +30,38 @@ const NameContainer = styled.div`
   justify-content: center;
 
   color: #002640;
-  transition: all 3s;
+  /* transition: all 3s;
   :hover {
     transition: 3s;
     transform: translateX(-10px);
-  }
+  } */
 `;
 
-const PeopleCard: FC<PeopleWithFunction> = ({
+const Circle = styled.div.attrs((props: { isLiked: boolean }) => props)`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: ${(props) => (props.isLiked ? `#a82525 ` : `#9b8e8e`)};
+`;
+
+const TitleBtn = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 120px;
+`;
+
+const PeopleCard: FC<CardPeopleProps> = ({
   name,
   profile_path,
-  addFavoriteActor,
+  isLiked,
   id,
 }) => {
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(isLiked);
   const onLikeClick = useCallback(() => {
     setLiked((prevState) => !prevState);
-    addFavoriteActor(id);
-  }, [setLiked, addFavoriteActor, id]);
+
+    FavoriteService.addFavoriteElement({ name, profile_path, id }, "actors");
+  }, [setLiked, id, profile_path, name]);
 
   return (
     <PeopleCardWrapper>
@@ -61,11 +70,13 @@ const PeopleCard: FC<PeopleWithFunction> = ({
       </div>
       <NameContainer>{name}</NameContainer>
       <div>
-        <button type="button" title={String(liked)} onClick={onLikeClick}>
-          {String(liked)}
-        </button>
+        <Button type="primary" onClick={onLikeClick}>
+          <TitleBtn>
+            {String(liked)}
+            <Circle isLiked={liked} />
+          </TitleBtn>
+        </Button>
       </div>
-      <span>{String(liked)}</span>
     </PeopleCardWrapper>
   );
 };

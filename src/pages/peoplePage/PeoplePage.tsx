@@ -5,10 +5,9 @@ import Header from "../../components/header/Header";
 import PeopleCard from "./PeopleCard";
 import { Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-
 import { fetchPeoples } from "../../redux/saga/actions/peoplesActions";
 import { getPeoples } from "../../redux/selectors/peoplesSelectors";
-import PeopleMoviePictures from "./PeopleMoviePictures";
+import FavoriteService from "../../services/FavoriteServices";
 
 const PeoplePageWrapper = styled.div`
   display: flex;
@@ -29,8 +28,9 @@ const StyleBtn = styled(Button)`
   margin-bottom: 30px;
 `;
 
-export interface PeopleWithFunction extends Peoples {
-  addFavoriteActor: any;
+export interface CardPeopleProps extends Peoples {
+  addFavoriteActor?: (id: string) => void;
+  isLiked: boolean;
 }
 
 export interface GetPeoplesInterface {
@@ -38,29 +38,23 @@ export interface GetPeoplesInterface {
   results: Peoples[];
 }
 
-export type Peoples = {
+export interface Peoples {
   id: string;
   profile_path: string;
   name: string;
-};
+}
 const PeoplePage: FC = () => {
   const dispatch = useDispatch();
   const people: Peoples[] = useSelector(getPeoples);
-  // const peoplesLoading: boolean = useSelector(
-  //   (state: RootState) => state.peoplesState.peoplesLoading
-  // );
   const [page, setPage] = useState(1);
-  const [favoriteActiorArr, setFavoriteActiorArr] = useState<number[]>([]);
+  const [currentFavorites, setCurrentFavorite] = useState<Peoples[]>([]);
 
-  const addFavoriteActor = useCallback(
-    (id) => {
-      console.log(id);
-
-      // favoriteActiorArr.push(id);
-      setFavoriteActiorArr(favoriteActiorArr.concat([id]));
-    },
-    [favoriteActiorArr, setFavoriteActiorArr]
-  );
+  useEffect(() => {
+    (async () => {
+      const { actors } = await FavoriteService.fetchFavorites();
+      setCurrentFavorite(actors);
+    })();
+  }, []);
 
   useEffect(() => {
     dispatch({ type: fetchPeoples.type, payload: page });
@@ -70,29 +64,29 @@ const PeoplePage: FC = () => {
     setPage(page + 1);
   };
 
-  console.log(favoriteActiorArr);
-
   return (
     <>
       <Header />
       <PeoplePageWrapper>
         <PeoplePageContainer>
-          {people.map(({ name, profile_path, id }) => (
-            <PeopleCard
-              name={name}
-              key={id}
-              id={id}
-              profile_path={profile_path}
-              addFavoriteActor={addFavoriteActor}
-            />
-          ))}
+          {people.map(({ name, profile_path, id }) => {
+            const isLiked = currentFavorites.some((elem) => elem.id === id);
+            return (
+              <PeopleCard
+                name={name}
+                key={id}
+                id={id}
+                profile_path={profile_path}
+                isLiked={isLiked}
+              />
+            );
+          })}
         </PeoplePageContainer>
         <div>
           <StyleBtn type="primary" onClick={changePagePlus}>
             More...
           </StyleBtn>
         </div>
-        <PeopleMoviePictures id={"asdasd"} nameMovie={"asdasdas"} />
       </PeoplePageWrapper>
       <Footer />
     </>

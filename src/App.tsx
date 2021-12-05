@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import PeoplePage from "./pages/peoplePage/PeoplePage";
 import RegistrationPage from "./pages/registrationPage/RegistrationPage";
-import SerialsPage from "./pages/serialsPage/SerialsPage";
+import FavoritesPage from "./pages/FavoritePage/FavoritesPage";
 import SignInPage from "./pages/signInPage/SignInPage";
 import StartPage from "./pages/startPage/StartPage";
 import YetPage from "./pages/yetPage/YetPage";
@@ -16,7 +16,7 @@ function App() {
     <Provider store={store}>
       <Switch>
         <Route path="/" exact component={StartPage} />
-        <Route path="/serials" exact component={SerialsPage} />
+        <Route path="/favorite" exact component={FavoritesPage} />
         <Route path="/people" exact component={PeoplePage} />
         <Route path="/yet" exact component={YetPage} />
         <Route path="/signin" exact component={SignInPage} />

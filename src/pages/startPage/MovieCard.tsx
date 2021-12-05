@@ -1,13 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useState } from "react";
 import styled from "styled-components";
-
-interface Tprops {
-  id: string;
-  name: string;
-  rating: number;
-  description: string;
-  imgURL: string;
-}
+import { CardMovieProps } from "./StartPage";
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
@@ -81,7 +74,19 @@ const Rating = styled.div`
   }
 `;
 
-const MovieCard: FC<Tprops> = ({ name, rating, imgURL, description }) => {
+const MovieCard: FC<CardMovieProps> = ({
+  name,
+  rating,
+  imgURL,
+  description,
+  id,
+  addFavoriteMovie,
+}) => {
+  const [likedMovie, setLikedMovie] = useState(false);
+  const onLikeClickMovie = useCallback(() => {
+    setLikedMovie((prevState) => !prevState);
+    addFavoriteMovie(id);
+  }, [setLikedMovie, addFavoriteMovie, id]);
   return (
     <MovieCardWrapper>
       <HeaderContainer>
@@ -96,6 +101,13 @@ const MovieCard: FC<Tprops> = ({ name, rating, imgURL, description }) => {
       <Rating>
         <h4>Rating {rating}</h4>
       </Rating>
+      <button
+        type="button"
+        title={String(likedMovie)}
+        onClick={onLikeClickMovie}
+      >
+        {String(likedMovie)}
+      </button>
     </MovieCardWrapper>
   );
 };

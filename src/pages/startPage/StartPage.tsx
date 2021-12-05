@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -6,7 +6,6 @@ import MovieCard from "./MovieCard";
 import { Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovies } from "../../redux/selectors/moviesSelectors";
-import { RootState } from "../../redux/store";
 import { fetchMovies } from "../../redux/saga/actions/movieActions";
 
 const StartPageWrapper = styled.div`
@@ -30,6 +29,18 @@ const StyleBtn = styled(Button)`
   margin-bottom: 30px;
 `;
 
+export interface CardMovieProps extends MovieCardProps {
+  addFavoriteMovie: (id: string) => void;
+}
+
+export interface MovieCardProps {
+  id: string;
+  name: string;
+  rating: number;
+  description: string;
+  imgURL: string;
+}
+
 export interface GetMovieInterface {
   page: number;
   results: Movies[];
@@ -46,10 +57,26 @@ export interface Movies {
 const StartPage: FC = () => {
   const dispatch = useDispatch();
   const movies: Movies[] = useSelector(getMovies);
-  const moviesLoading: boolean = useSelector(
-    (state: RootState) => state.moviesState.moviesLoading
-  );
+  // const moviesLoading: boolean = useSelector(
+  //   (state: RootState) => state.moviesState.moviesLoading
+  // );
   const [page, setPage] = useState(1);
+  const [favoriteMovieArr, setFavoriteMovieArr] = useState<number[]>([]);
+
+  const addFavoriteMovie = useCallback(
+    (id) => {
+      setFavoriteMovieArr(favoriteMovieArr.concat([id]));
+    },
+    [favoriteMovieArr, setFavoriteMovieArr]
+  );
+
+  const arrMovieTest = () => {
+    for (let index = favoriteMovieArr.length - 1; index >= 0; index--) {
+      if (favoriteMovieArr.indexOf(favoriteMovieArr[index]) !== index)
+        favoriteMovieArr.splice(index, 1);
+    }
+  };
+  arrMovieTest();
 
   useEffect(() => {
     dispatch({ type: fetchMovies.type, payload: page });
@@ -59,25 +86,24 @@ const StartPage: FC = () => {
     setPage(page + 1);
   };
 
+  console.log(favoriteMovieArr);
+
   return (
     <>
       <Header />
       <StartPageWrapper>
         <MoviesContainer>
-          {moviesLoading ? (
-            <div>LOADING...</div>
-          ) : (
-            movies.map(({ title, poster_path, popularity, id, overview }) => (
-              <MovieCard
-                name={title}
-                imgURL={poster_path}
-                rating={popularity}
-                description={overview}
-                key={id}
-                id={id}
-              />
-            ))
-          )}
+          {movies.map(({ title, poster_path, popularity, id, overview }) => (
+            <MovieCard
+              name={title}
+              imgURL={poster_path}
+              rating={popularity}
+              description={overview}
+              key={id}
+              id={id}
+              addFavoriteMovie={addFavoriteMovie}
+            />
+          ))}
         </MoviesContainer>
         <div>
           <StyleBtn type="primary" onClick={changePagePlus}>

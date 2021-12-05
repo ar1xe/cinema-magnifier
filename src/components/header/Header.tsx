@@ -23,7 +23,7 @@ const Header: FC = () => {
             <Link to="/">Movies</Link>
           </span>
           <span>
-            <Link to="/serials">Serials</Link>
+            <Link to="/favorite">Favorites</Link>
           </span>
           <span>
             <Link to="/people">People</Link>

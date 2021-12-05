@@ -3,23 +3,23 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 
-const SerialsPageWrapper = styled.div`
+const FavoritesPageWrapper = styled.div`
   min-height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const SerialsPage: FC = () => {
+const FavoritesPage: FC = () => {
   return (
     <>
       <Header />
-      <SerialsPageWrapper>
-        <h2>SerialsPage</h2>
-      </SerialsPageWrapper>
+      <FavoritesPageWrapper>
+        <h2>Favorites Page</h2>
+      </FavoritesPageWrapper>
       <Footer />
     </>
   );
 };
 
-export default SerialsPage;
+export default FavoritesPage;
