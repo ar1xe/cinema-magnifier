@@ -1,6 +1,8 @@
 import React, { FC, useCallback, useState } from "react";
 import styled from "styled-components";
+import FavoriteService from "../../services/FavoriteServices";
 import { CardMovieProps } from "./StartPage";
+import { Button } from "antd";
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
@@ -74,40 +76,56 @@ const Rating = styled.div`
   }
 `;
 
+const Circle = styled.div.attrs((props: { isLiked: boolean }) => props)`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: ${(props) => (props.isLiked ? `#a82525 ` : `#9b8e8e`)};
+`;
+
+const TitleBtn = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 130px;
+`;
+
 const MovieCard: FC<CardMovieProps> = ({
-  name,
-  rating,
-  imgURL,
-  description,
+  title,
+  popularity,
+  poster_path,
+  overview,
+  isLiked,
   id,
-  addFavoriteMovie,
 }) => {
-  const [likedMovie, setLikedMovie] = useState(false);
-  const onLikeClickMovie = useCallback(() => {
-    setLikedMovie((prevState) => !prevState);
-    addFavoriteMovie(id);
-  }, [setLikedMovie, addFavoriteMovie, id]);
+  const [liked, setLiked] = useState(isLiked);
+  const onLikeClick = useCallback(() => {
+    setLiked((prevState) => !prevState);
+
+    FavoriteService.addFavoriteElement(
+      { title, popularity, poster_path, overview, id },
+      "moviesS"
+    );
+  }, [setLiked, title, popularity, poster_path, overview, id]);
   return (
     <MovieCardWrapper>
       <HeaderContainer>
-        <Header>{name}</Header>
+        <Header>{title}</Header>
       </HeaderContainer>
       <ImgContainer>
-        <Img src={BASE_URL + imgURL + API_KEY} width={250} height={350} />
+        <Img src={BASE_URL + poster_path + API_KEY} width={250} height={350} />
       </ImgContainer>
       <Description>
-        <p>{description}</p>
+        <p>{overview}</p>
       </Description>
       <Rating>
-        <h4>Rating {rating}</h4>
+        <h4>Rating {popularity}</h4>
       </Rating>
-      <button
-        type="button"
-        title={String(likedMovie)}
-        onClick={onLikeClickMovie}
-      >
-        {String(likedMovie)}
-      </button>
+
+      <Button type="primary" onClick={onLikeClick}>
+        <TitleBtn>
+          <Circle isLiked={liked} />
+        </TitleBtn>
+      </Button>
     </MovieCardWrapper>
   );
 };

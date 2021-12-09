@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button } from "antd";
 import { CardPeopleProps } from "./PeoplePage";
 import FavoriteService from "../../services/FavoriteServices";
+import LikeSVG from "../../components/svgLike/LikeSVG";
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
@@ -44,10 +45,17 @@ const Circle = styled.div.attrs((props: { isLiked: boolean }) => props)`
   background-color: ${(props) => (props.isLiked ? `#a82525 ` : `#9b8e8e`)};
 `;
 
+// const LikeSVG = styled.div.attrs(
+//   (props: { id: string; isLiked: boolean; fill: string; stroke: string }) =>
+//     props
+// )`
+//   fill: ${(props) => (props.isLiked ? `red` : `white`)};
+// `;
+
 const TitleBtn = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 120px;
+  width: 130px;
 `;
 
 const PeopleCard: FC<CardPeopleProps> = ({
@@ -72,8 +80,10 @@ const PeopleCard: FC<CardPeopleProps> = ({
       <div>
         <Button type="primary" onClick={onLikeClick}>
           <TitleBtn>
-            {String(liked)}
             <Circle isLiked={liked} />
+            {/* <img src={Like} alt="logo" width={25} height={25} isLiked={liked} /> */}
+
+            <LikeSVG id="LikeSVG" fill="white" stroke="white" />
           </TitleBtn>
         </Button>
       </div>

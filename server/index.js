@@ -14,7 +14,7 @@ app.use(
 const users = [];
 const favorites = {
   actors: [],
-  movies: [],
+  moviesS: [],
 };
 
 app.post("/registration", (req, res) => {
@@ -32,13 +32,13 @@ app.post("/favorite/addElement", (req, res) => {
     } else {
       favorites.actors.push(req.body.element);
     }
-  } else if (req.body.type === "movies") {
-    if (favorites.movies.find((elem) => elem.id === req.body.element.id)) {
-      favorites.movies = favorites.movies.filter(
+  } else if (req.body.type === "moviesS") {
+    if (favorites.moviesS.find((elem) => elem.id === req.body.element.id)) {
+      favorites.moviesS = favorites.moviesS.filter(
         (elem) => elem.id !== req.body.element.id
       );
     } else {
-      favorites.movies.push(req.body.element);
+      favorites.moviesS.push(req.body.element);
     }
   }
   console.log(favorites);
