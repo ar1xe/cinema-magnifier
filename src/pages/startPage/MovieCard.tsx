@@ -12,13 +12,15 @@ const MovieCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 40px 0 40px 0;
-  border: solid 1.9px;
+  justify-content: center;
+  align-items: center;
+  /* border: solid 1.9px;
   border-radius: 15px;
   transition: all 3s;
   :hover {
     transition: 3s;
     transform: scale(1.1);
-  }
+  } */
 `;
 
 const HeaderContainer = styled.div`
@@ -34,11 +36,11 @@ const Header = styled.h3`
   justify-content: center;
   align-items: center;
   text-align: center;
-  transition: all 3s;
+  /* transition: all 3s;
   :hover {
     transition: 3s;
     transform: translateX(-10px);
-  }
+  } */
 `;
 
 const ImgContainer = styled.div`
@@ -48,9 +50,9 @@ const ImgContainer = styled.div`
 
 const Img = styled.img`
   border-radius: 15px;
-  transition: all 1s;
+  transition: all 0.3s;
   :hover {
-    transition: 1s;
+    transition: 0.3s;
     transform: scale(1.1);
   }
 `;
@@ -69,24 +71,27 @@ const Rating = styled.div`
   display: flex;
   justify-content: center;
   font-size: 17px;
-  transition: all 1s;
+  /* transition: all 1s;
   :hover {
     transition: 1s;
     transform: scale(1.1) rotate(3deg);
+  } */
+`;
+
+const SVG = styled.div.attrs((props: { isLiked: boolean }) => props)`
+  #heart {
+    fill: ${(props) => (props.isLiked ? `red` : `white`)};
   }
-`;
-
-const Circle = styled.div.attrs((props: { isLiked: boolean }) => props)`
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: ${(props) => (props.isLiked ? `#a82525 ` : `#9b8e8e`)};
-`;
-
-const TitleBtn = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 130px;
+`;
+
+const CustomButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
 `;
 
 const MovieCard: FC<CardMovieProps> = ({
@@ -121,11 +126,24 @@ const MovieCard: FC<CardMovieProps> = ({
         <h4>Rating {popularity}</h4>
       </Rating>
 
-      <Button type="primary" onClick={onLikeClick}>
-        <TitleBtn>
-          <Circle isLiked={liked} />
-        </TitleBtn>
-      </Button>
+      <CustomButton type="primary" onClick={onLikeClick}>
+        <SVG isLiked={liked}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={25}
+            height={25}
+            viewBox="0 0 512 512"
+          >
+            <title>Heart</title>
+            <path
+              id="heart"
+              d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </SVG>
+      </CustomButton>
     </MovieCardWrapper>
   );
 };
