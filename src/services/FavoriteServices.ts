@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Peoples } from "../pages/peoplePage/PeoplePage";
-import { MovieCardProps, Movies } from "../pages/startPage/StartPage";
+import { Movies } from "../pages/startPage/StartPage";
 
 const BASE_URL = "http://localhost:3333/favorite/";
 
@@ -21,6 +21,16 @@ export default class FavoriteService {
   static async fetchFavorites() {
     try {
       const response = await axios.get(BASE_URL + "fetchFavorites");
+      return await Promise.resolve(response.data);
+    } catch (error) {
+      console.log(error);
+      return await Promise.reject(error);
+    }
+  }
+
+  static async getFavoriteActors() {
+    try {
+      const response = await axios.get(BASE_URL + "addElement");
       return await Promise.resolve(response.data);
     } catch (error) {
       console.log(error);
