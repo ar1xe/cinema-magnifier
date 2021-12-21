@@ -27,4 +27,14 @@ export default class FavoriteService {
       return await Promise.reject(error);
     }
   }
+
+  static async getFavoriteActors() {
+    try {
+      const response = await axios.get(BASE_URL + "addElement");
+      return await Promise.resolve(response.data);
+    } catch (error) {
+      console.log(error);
+      return await Promise.reject(error);
+    }
+  }
 }
