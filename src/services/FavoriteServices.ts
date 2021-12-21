@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Peoples } from "../pages/peoplePage/PeoplePage";
-import { MovieCardProps, Movies } from "../pages/startPage/StartPage";
+import { Movies } from "../pages/startPage/StartPage";
 
 const BASE_URL = "http://localhost:3333/favorite/";
 
