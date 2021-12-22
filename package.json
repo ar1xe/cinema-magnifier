@@ -31,7 +31,7 @@
   "scripts": {
     "server": "node ./server/index",
     "app": "react-scripts start",
-    "start": "concurrently \"npm run server\" \"npm run app\"",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
