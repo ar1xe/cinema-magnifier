@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.js": "/cinema-magnifier/static/js/main.caf0d9a4.chunk.js",
+    "main.js.map": "/cinema-magnifier/static/js/main.caf0d9a4.chunk.js.map",
+    "runtime-main.js": "/cinema-magnifier/static/js/runtime-main.c2b165c9.js",
+    "runtime-main.js.map": "/cinema-magnifier/static/js/runtime-main.c2b165c9.js.map",
+    "static/css/2.a95be28f.chunk.css": "/cinema-magnifier/static/css/2.a95be28f.chunk.css",
+    "static/js/2.f45bf6d2.chunk.js": "/cinema-magnifier/static/js/2.f45bf6d2.chunk.js",
+    "static/js/2.f45bf6d2.chunk.js.map": "/cinema-magnifier/static/js/2.f45bf6d2.chunk.js.map",
+    "static/js/3.1fd77bba.chunk.js": "/cinema-magnifier/static/js/3.1fd77bba.chunk.js",
+    "static/js/3.1fd77bba.chunk.js.map": "/cinema-magnifier/static/js/3.1fd77bba.chunk.js.map",
+    "index.html": "/cinema-magnifier/index.html",
+    "static/css/2.a95be28f.chunk.css.map": "/cinema-magnifier/static/css/2.a95be28f.chunk.css.map",
+    "static/js/2.f45bf6d2.chunk.js.LICENSE.txt": "/cinema-magnifier/static/js/2.f45bf6d2.chunk.js.LICENSE.txt",
+    "static/media/facebook.723b1f1a.svg": "/cinema-magnifier/static/media/facebook.723b1f1a.svg",
+    "static/media/logo.b77c5835.svg": "/cinema-magnifier/static/media/logo.b77c5835.svg",
+    "static/media/mail.55516754.svg": "/cinema-magnifier/static/media/mail.55516754.svg",
+    "static/media/reddit.cb9bbe1a.svg": "/cinema-magnifier/static/media/reddit.cb9bbe1a.svg",
+    "static/media/setting.f919a5f0.svg": "/cinema-magnifier/static/media/setting.f919a5f0.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c2b165c9.js",
+    "static/css/2.a95be28f.chunk.css",
+    "static/js/2.f45bf6d2.chunk.js",
+    "static/js/main.caf0d9a4.chunk.js"
+  ]
+}
