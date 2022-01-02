@@ -1,11 +1,11 @@
+// eslint-disable-next-line
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import FavoriteService from "../../services/FavoriteServices";
-import { CardPeopleProps } from "../peoplePage/PeoplePage";
-import { MovieCardProps } from "../startPage/StartPage";
-import FavoriteActorsCard from "./FavoriteActorsCard";
+// import FavoriteService from "../../services/FavoriteServices";
+// import { CardPeopleProps } from "../peoplePage/PeoplePage";
+// import { MovieCardProps } from "../startPage/StartPage";
 
 const FavoritesPageWrapper = styled.div`
   min-height: 70vh;
@@ -15,16 +15,16 @@ const FavoritesPageWrapper = styled.div`
 `;
 
 const FavoritesPage: FC = () => {
-  const [favoriteActors, setFavoriteActors] = useState<CardPeopleProps[]>([]);
-  const [favoriteMovies, setFavoriteMovies] = useState<MovieCardProps[]>([]);
+  // const [favoriteActors, setFavoriteActors] = useState<CardPeopleProps[]>([]);
+  // const [favoriteMovies, setFavoriteMovies] = useState<MovieCardProps[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const { actors, moviesS } = await FavoriteService.fetchFavorites();
-      setFavoriteMovies(moviesS);
-      setFavoriteActors(actors);
-    })();
-  }, [setFavoriteActors]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { actors, moviesS } = await FavoriteService.fetchFavorites();
+  //     setFavoriteMovies(moviesS);
+  //     setFavoriteActors(actors);
+  //   })();
+  // }, [setFavoriteActors]);
 
   return (
     <>
