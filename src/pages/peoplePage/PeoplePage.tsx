@@ -30,7 +30,7 @@ const StyleBtn = styled(Button)`
 
 export interface CardPeopleProps extends Peoples {
   addFavoriteActor?: (id: string) => void;
-  isLiked: boolean;
+  isLiked?: boolean;
 }
 
 export interface GetPeoplesInterface {

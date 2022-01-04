@@ -2,7 +2,7 @@
   "name": "cinema-magnifier",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ar1xe.github.io/cinema-magnifier",
+  "homepage": ".",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.6.2",

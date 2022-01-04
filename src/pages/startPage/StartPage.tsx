@@ -32,7 +32,7 @@ const StyleBtn = styled(Button)`
 
 export interface CardMovieProps extends Movies {
   addFavoriteMovie?: (id: string) => void;
-  isLiked: boolean;
+  isLiked?: boolean;
 }
 
 export interface GetMovieInterface {
