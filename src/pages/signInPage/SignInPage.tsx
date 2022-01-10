@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import { Form, Input, Button, Checkbox } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { RegisrationServices } from "../../services/RegisrationServices";
 
 const SignInPageWrapper = styled.div`
   min-height: 70vh;
@@ -17,12 +18,23 @@ const StyledBtn = styled(Button)`
 `;
 
 const SignInPage: FC = () => {
-  const onFinish = (values: {
+  const history = useHistory();
+
+  const onFinish = async (values: {
     password: string;
     remember: boolean;
     username: string;
   }) => {
-    console.log("Success:", values);
+    const response = await RegisrationServices().authorizationUser({
+      ...values,
+    });
+    console.log(response);
+
+    if (response.data.isAvtorization) {
+      history.push("/");
+    } else {
+      console.log(response.data);
+    }
   };
 
   const onFinishFailed = (errorInfo: unknown) => {

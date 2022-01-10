@@ -19,9 +19,27 @@ const favorites = {
 };
 
 app.post("/registration", (req, res) => {
-  console.log(req.body);
-  if (req.body.email) users.push(req.body);
-  res.status(200).json("registration");
+  // console.log(req.body);
+  if (req.body.element.email) users.push(req.body.element);
+  res.status(200).json({ isRegistration: true });
+});
+
+app.post("/authorization", (req, res) => {
+  const currentUser = users.find((user) => {
+    // console.log(user.nickname);
+    // console.log(req.body.element.username);
+    return user.nickname === req.body.element.username;
+  });
+
+  if (currentUser) {
+    if (currentUser.password === req.body.element.password) {
+      res.status(200).json({ isAvtorization: true });
+    } else {
+      res.status(200).json("password is wrong");
+    }
+  } else {
+    res.status(200).json("The username or password you entered is incorrect");
+  }
 });
 
 app.post("/favorite/addElement", (req, res) => {

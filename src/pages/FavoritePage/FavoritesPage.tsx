@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import FavoriteService from "../../services/FavoriteServices";
-import { CardPeopleProps } from "../peoplePage/PeoplePage";
+import { CardPeopleProps, Info } from "../peoplePage/PeoplePage";
 import { CardMovieProps } from "../startPage/StartPage";
 import FavoriteActorsCard from "./FavoriteActorsCard";
 import FavoriteMovieCard from "./FavoriteMovieCard";
@@ -21,7 +21,7 @@ const ActorsWrapper = styled.div`
 `;
 
 const FavoritesPage: FC = () => {
-  const [favoriteActors, setFavoriteActors] = useState<CardPeopleProps[]>([]);
+  const [favoriteActors, setFavoriteActors] = useState<Info[]>([]);
   const [favoriteMovies, setFavoriteMovies] = useState<CardMovieProps[]>([]);
 
   useEffect(() => {
@@ -32,19 +32,25 @@ const FavoritesPage: FC = () => {
     })();
   }, [setFavoriteActors]);
 
+  console.log(favoriteActors);
+
   return (
     <>
       <Header />
       <FavoritesPageWrapper>
         <ActorsWrapper>
-          {favoriteActors.map(({ name, profile_path, id }) => (
-            <FavoriteActorsCard
-              name={name}
-              key={id}
-              id={id}
-              profile_path={profile_path}
-            />
-          ))}
+          {favoriteActors.map(
+            ({ name, profile_path, id, original_title, release_date }) => (
+              <FavoriteActorsCard
+                name={name}
+                key={id}
+                id={id}
+                profile_path={profile_path}
+                original_title={original_title}
+                release_date={release_date}
+              />
+            )
+          )}
         </ActorsWrapper>
         <div>
           {favoriteMovies.map(

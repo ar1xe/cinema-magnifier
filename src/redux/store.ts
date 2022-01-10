@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import moviesReducer from "./slices/moviesSlice";
 import peoplesReducer from "./slices/peoplesSlice";
+import searchPeopleReducer from "./slices/searchPeopleSlice";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./saga";
 
@@ -12,6 +13,7 @@ export const store = configureStore({
   reducer: {
     moviesState: moviesReducer,
     peoplesState: peoplesReducer,
+    searchPeoplesState: searchPeopleReducer,
   },
   middleware,
 });

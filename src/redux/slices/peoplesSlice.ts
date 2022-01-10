@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Peoples } from "../../pages/peoplePage/PeoplePage";
+import {
+  GetPeoplesInterface,
+  Peoples,
+} from "../../pages/peoplePage/PeoplePage";
 
 interface PeoplesState {
   peoples: Peoples[];
@@ -21,9 +24,15 @@ const peoplesSlice = createSlice({
       ...state,
       peoplesLoading: action.payload,
     }),
-    fetchPeoplesSuccess: (state, action: PayloadAction<Peoples[]>) => ({
+    fetchPeoplesSuccess: (
+      state,
+      action: PayloadAction<GetPeoplesInterface>
+    ) => ({
       ...state,
-      peoples: state.peoples.concat(action.payload),
+      peoples:
+        action.payload.page === 1
+          ? action.payload.results
+          : state.peoples.concat(action.payload.results),
     }),
     fetchPeoplesEnd: (state) => ({
       ...state,

@@ -16,7 +16,12 @@ export function* fetchPeoplesWorker(action: ReturnType<typeof fetchPeoples>) {
       PeopleService.getPeoples,
       action.payload
     );
-    yield put(fetchPeoplesSuccess(currentPeople.results));
+    yield put(
+      fetchPeoplesSuccess({
+        results: currentPeople.results,
+        page: action.payload,
+      })
+    );
   } catch (error) {
     yield put(fetchPeoplesFailure(error as string));
   } finally {

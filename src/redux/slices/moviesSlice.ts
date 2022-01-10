@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Movies } from "../../pages/startPage/StartPage";
+import { GetMovieInterface, Movies } from "../../pages/startPage/StartPage";
 
 interface MoviesState {
   movies: Movies[];
@@ -21,9 +21,12 @@ const moviesSlice = createSlice({
       ...state,
       moviesLoading: action.payload,
     }),
-    fetchMoviesSuccess: (state, action: PayloadAction<Movies[]>) => ({
+    fetchMoviesSuccess: (state, action: PayloadAction<GetMovieInterface>) => ({
       ...state,
-      movies: state.movies.concat(action.payload),
+      movies:
+        action.payload.page === 1
+          ? action.payload.results
+          : state.movies.concat(action.payload.results),
     }),
     fetchMoviesEnd: (state) => ({
       ...state,

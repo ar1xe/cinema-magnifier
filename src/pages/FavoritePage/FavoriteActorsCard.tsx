@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { CardPeopleProps } from "../peoplePage/PeoplePage";
+import { CardPeopleProps, Info, Peoples } from "../peoplePage/PeoplePage";
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
@@ -21,9 +21,11 @@ const NameContainer = styled.div`
   color: #002640;
 `;
 
-const FavoriteActorsCard: FC<CardPeopleProps> = ({
+const FavoriteActorsCard: FC<Info> = ({
   name,
   profile_path,
+  original_title,
+  release_date,
   id,
 }) => {
   return (
@@ -37,6 +39,10 @@ const FavoriteActorsCard: FC<CardPeopleProps> = ({
           />
         </div>
         <NameContainer>{name}</NameContainer>
+        <div>{original_title}</div>
+        <div>
+          <p>{release_date}</p>
+        </div>
       </PeopleCardWrapper>
     </>
   );

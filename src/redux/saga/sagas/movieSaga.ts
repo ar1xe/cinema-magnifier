@@ -17,7 +17,12 @@ export function* fetchMoviesWorker(action: ReturnType<typeof fetchMovies>) {
       action.payload
     );
 
-    yield put(fetchMoviesSuccess(currentMovie.results));
+    yield put(
+      fetchMoviesSuccess({
+        results: currentMovie.results,
+        page: action.payload,
+      })
+    );
   } catch (error) {
     yield put(fetchMoviesFailure(error as string));
   } finally {

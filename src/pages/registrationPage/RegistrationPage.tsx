@@ -4,6 +4,9 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import { Form, Input, Select, Checkbox, Button } from "antd";
 import axios from "axios";
+import { RegisrationServices } from "../../services/RegisrationServices";
+import { useHistory } from "react-router-dom";
+
 const { Option } = Select;
 
 const RegistrationPageWrapper = styled.div`
@@ -46,10 +49,13 @@ const tailFormItemLayout = {
 
 const RegistrationPage: FC = () => {
   const [form] = Form.useForm();
-
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-    axios.post("http://localhost:3333/registration", { ...values });
+  const history = useHistory();
+  const onFinish = async (values: any) => {
+    // console.log("Received values of form: ", values);
+    const response = await RegisrationServices().registrationUser({
+      ...values,
+    });
+    if (response.data.isRegistration) history.push("/signin");
   };
 
   const prefixSelector = (

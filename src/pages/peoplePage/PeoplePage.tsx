@@ -7,7 +7,11 @@ import { Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPeoples } from "../../redux/saga/actions/peoplesActions";
 import { getPeoples } from "../../redux/selectors/peoplesSelectors";
+
 import FavoriteService from "../../services/FavoriteServices";
+import { Input } from "antd";
+import { getPeopleSearch } from "../../redux/selectors/searchPeopleSelector";
+import { fetchSearchPeoples } from "../../redux/saga/actions/searchPeoplesAction";
 
 const PeoplePageWrapper = styled.div`
   display: flex;
@@ -28,6 +32,10 @@ const StyleBtn = styled(Button)`
   margin-bottom: 30px;
 `;
 
+const InputWrapper = styled.div`
+  margin-top: 25px;
+`;
+
 export interface CardPeopleProps extends Peoples {
   addFavoriteActor?: (id: string) => void;
   isLiked?: boolean;
@@ -38,16 +46,27 @@ export interface GetPeoplesInterface {
   results: Peoples[];
 }
 
+export interface Info {
+  original_title: string;
+  release_date: string;
+  id: string;
+  profile_path: string;
+  name: string;
+}
+
 export interface Peoples {
   id: string;
   profile_path: string;
   name: string;
+  known_for?: Info[];
 }
 const PeoplePage: FC = () => {
   const dispatch = useDispatch();
   const people: Peoples[] = useSelector(getPeoples);
   const [page, setPage] = useState(1);
   const [currentFavorites, setCurrentFavorite] = useState<Peoples[]>([]);
+  const [value, setValue] = useState("");
+  const searchPeoples: Peoples[] = useSelector(getPeopleSearch);
 
   useEffect(() => {
     (async () => {
@@ -60,16 +79,35 @@ const PeoplePage: FC = () => {
     dispatch({ type: fetchPeoples.type, payload: page });
   }, [page, dispatch]);
 
+  useEffect(() => {
+    dispatch({ type: fetchSearchPeoples.type, payload: page });
+  }, [page, dispatch]);
+
   const changePagePlus = () => {
     setPage(page + 1);
   };
+
+  const filteredActors = people.filter((actor) => {
+    return actor.name.toLowerCase().includes(value.toLocaleLowerCase());
+  });
 
   return (
     <>
       <Header />
       <PeoplePageWrapper>
+        <InputWrapper>
+          <form>
+            <Input
+              type="text"
+              placeholder="Search actors..."
+              onChange={(event) => {
+                setValue(event.target.value);
+              }}
+            />
+          </form>
+        </InputWrapper>
         <PeoplePageContainer>
-          {people.map(({ name, profile_path, id }) => {
+          {filteredActors.map(({ name, profile_path, id }) => {
             const isLiked = currentFavorites.some((elem) => elem.id === id);
             return (
               <PeopleCard
