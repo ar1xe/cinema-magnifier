@@ -46,20 +46,22 @@ export interface GetPeoplesInterface {
   results: Peoples[];
 }
 
-export interface Info {
-  original_title: string;
-  release_date: string;
-  id: string;
-  profile_path: string;
-  name: string;
-}
-
 export interface Peoples {
   id: string;
   profile_path: string;
   name: string;
+  original_name?: string;
+  first_air_date?: string;
   known_for?: Info[];
 }
+
+export interface Info {
+  original_name: string;
+  first_air_date: string;
+  // profile_path: string;
+  // name: string;
+}
+
 const PeoplePage: FC = () => {
   const dispatch = useDispatch();
   const people: Peoples[] = useSelector(getPeoples);

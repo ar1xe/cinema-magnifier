@@ -21,12 +21,13 @@ const NameContainer = styled.div`
   color: #002640;
 `;
 
-const FavoriteActorsCard: FC<Info> = ({
+const FavoriteActorsCard: FC<Peoples> = ({
   name,
   profile_path,
-  original_title,
-  release_date,
+  original_name,
+  first_air_date,
   id,
+  known_for,
 }) => {
   return (
     <>
@@ -39,10 +40,16 @@ const FavoriteActorsCard: FC<Info> = ({
           />
         </div>
         <NameContainer>{name}</NameContainer>
-        <div>{original_title}</div>
         <div>
-          <p>{release_date}</p>
+          {known_for?.map((info) => (
+            <p>{info.original_name}</p>
+          ))}
         </div>
+        {/* <p>{original_name}</p> */}
+        {known_for?.map((info) => (
+          <p>{info.first_air_date}</p>
+        ))}
+        {/* <p>{first_air_date}</p> */}
       </PeopleCardWrapper>
     </>
   );
