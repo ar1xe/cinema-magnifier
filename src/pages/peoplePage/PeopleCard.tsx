@@ -51,13 +51,17 @@ const PeopleCard: FC<CardPeopleProps> = ({
   profile_path,
   isLiked,
   id,
+  known_for,
 }) => {
   const [liked, setLiked] = useState(isLiked);
   const onLikeClick = useCallback(() => {
     setLiked((prevState) => !prevState);
 
-    FavoriteService.addFavoriteElement({ name, profile_path, id }, "actors");
-  }, [setLiked, id, profile_path, name]);
+    FavoriteService.addFavoriteElement(
+      { name, profile_path, id, known_for },
+      "actors"
+    );
+  }, [setLiked, id, profile_path, name, known_for]);
 
   return (
     <PeopleCardWrapper>
@@ -65,6 +69,7 @@ const PeopleCard: FC<CardPeopleProps> = ({
         <Img src={BASE_URL + profile_path + API_KEY} width={160} height={240} />
       </div>
       <NameContainer>{name}</NameContainer>
+
       <div>
         <Button type="primary" onClick={onLikeClick}>
           <SVG isLiked={liked}>

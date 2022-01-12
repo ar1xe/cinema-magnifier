@@ -50,16 +50,17 @@ export interface Peoples {
   id: string;
   profile_path: string;
   name: string;
-  original_name?: string;
-  first_air_date?: string;
+  popularity?: number;
   known_for?: Info[];
+  original_title?: string;
+  release_date?: string;
+  poster_path?: string;
 }
 
 export interface Info {
-  original_name: string;
-  first_air_date: string;
-  // profile_path: string;
-  // name: string;
+  original_title: string;
+  release_date: string;
+  poster_path: string;
 }
 
 const PeoplePage: FC = () => {
@@ -68,7 +69,7 @@ const PeoplePage: FC = () => {
   const [page, setPage] = useState(1);
   const [currentFavorites, setCurrentFavorite] = useState<Peoples[]>([]);
   const [value, setValue] = useState("");
-  const searchPeoples: Peoples[] = useSelector(getPeopleSearch);
+  // const searchPeoples: Peoples[] = useSelector(getPeopleSearch);
 
   useEffect(() => {
     (async () => {

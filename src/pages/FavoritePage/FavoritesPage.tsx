@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import FavoriteService from "../../services/FavoriteServices";
-import { CardPeopleProps, Info, Peoples } from "../peoplePage/PeoplePage";
+import { Peoples } from "../peoplePage/PeoplePage";
 import { CardMovieProps } from "../startPage/StartPage";
 import FavoriteActorsCard from "./FavoriteActorsCard";
 import FavoriteMovieCard from "./FavoriteMovieCard";
@@ -30,7 +30,7 @@ const FavoritesPage: FC = () => {
       setFavoriteMovies(moviesS);
       setFavoriteActors(actors);
     })();
-  }, [setFavoriteActors]);
+  }, [setFavoriteActors, setFavoriteMovies]);
 
   console.log(favoriteActors);
 
@@ -44,19 +44,21 @@ const FavoritesPage: FC = () => {
               name,
               profile_path,
               id,
-              original_name,
-              first_air_date,
+              original_title,
+              release_date,
               known_for,
+              poster_path,
             }) => {
               return (
                 <FavoriteActorsCard
                   name={name}
                   profile_path={profile_path}
-                  id={id}
-                  original_name={original_name}
-                  first_air_date={first_air_date}
-                  known_for={known_for}
                   key={id}
+                  id={id}
+                  original_title={original_title}
+                  release_date={release_date}
+                  known_for={known_for}
+                  poster_path={poster_path}
                 />
               );
             }

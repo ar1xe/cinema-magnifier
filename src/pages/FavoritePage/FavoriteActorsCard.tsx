@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { CardPeopleProps, Info, Peoples } from "../peoplePage/PeoplePage";
+import { Peoples } from "../peoplePage/PeoplePage";
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
@@ -15,20 +15,14 @@ const PeopleCardWrapper = styled.div`
 const Img = styled.img`
   border-radius: 15px 15px 5px 5px;
 `;
+
 const NameContainer = styled.div`
   display: flex;
   justify-content: center;
   color: #002640;
 `;
 
-const FavoriteActorsCard: FC<Peoples> = ({
-  name,
-  profile_path,
-  original_name,
-  first_air_date,
-  id,
-  known_for,
-}) => {
+const FavoriteActorsCard: FC<Peoples> = ({ name, profile_path, known_for }) => {
   return (
     <>
       <PeopleCardWrapper>
@@ -39,17 +33,23 @@ const FavoriteActorsCard: FC<Peoples> = ({
             height={240}
           />
         </div>
+        <div></div>
         <NameContainer>{name}</NameContainer>
+
         <div>
-          {known_for?.map((info) => (
-            <p>{info.original_name}</p>
+          {known_for?.map((i) => (
+            <p>{i.original_title}</p>
           ))}
         </div>
-        {/* <p>{original_name}</p> */}
-        {known_for?.map((info) => (
-          <p>{info.first_air_date}</p>
+        <div>
+          {known_for?.map((poster) => (
+            <div>{BASE_URL + poster.poster_path}</div>
+          ))}
+        </div>
+
+        {known_for?.map((i) => (
+          <p>{i.release_date}</p>
         ))}
-        {/* <p>{first_air_date}</p> */}
       </PeopleCardWrapper>
     </>
   );
