@@ -69,10 +69,12 @@ const StartPage: FC = () => {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    (async () => {
-      const { moviesS } = await FavoriteService.fetchFavorites();
-      setCurrentFavorite(moviesS);
-    })();
+    const fetchFavoritesMovies = async () => {
+      const { movies: favoritesMovies } =
+        await FavoriteService.fetchFavorites();
+      setCurrentFavorite(favoritesMovies);
+    };
+    fetchFavoritesMovies();
   }, []);
 
   useEffect(() => {
@@ -83,9 +85,9 @@ const StartPage: FC = () => {
     setPage(page + 1);
   };
 
-  const filteredMovies = movies.filter((movie) => {
-    return movie.title.toLowerCase().includes(value.toLocaleLowerCase());
-  });
+  // const filteredMovies = movies.filter((movie) => {
+  //   return movie.title.toLowerCase().includes(value.toLocaleLowerCase());
+  // });
 
   return (
     <>
@@ -103,22 +105,20 @@ const StartPage: FC = () => {
           </form>
         </InputWrapper>
         <MoviesContainer>
-          {filteredMovies.map(
-            ({ title, poster_path, popularity, id, overview }) => {
-              const isLiked = currentFavorites.some((elem) => elem.id === id);
-              return (
-                <MovieCard
-                  title={title}
-                  poster_path={poster_path}
-                  popularity={popularity}
-                  overview={overview}
-                  key={id}
-                  id={id}
-                  isLiked={isLiked}
-                />
-              );
-            }
-          )}
+          {movies.map(({ title, poster_path, popularity, id, overview }) => {
+            const isLiked = currentFavorites.some((elem) => elem.id === id);
+            return (
+              <MovieCard
+                title={title}
+                poster_path={poster_path}
+                popularity={popularity}
+                overview={overview}
+                key={id}
+                id={id}
+                isLiked={isLiked}
+              />
+            );
+          })}
         </MoviesContainer>
         <div>
           <StyleBtn type="primary" onClick={changePagePlus}>

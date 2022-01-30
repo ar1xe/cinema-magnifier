@@ -27,13 +27,17 @@ const peoplesSlice = createSlice({
     fetchPeoplesSuccess: (
       state,
       action: PayloadAction<GetPeoplesInterface>
-    ) => ({
-      ...state,
-      peoples:
-        action.payload.page === 1
-          ? action.payload.results
-          : state.peoples.concat(action.payload.results),
-    }),
+    ) => {
+      console.log(action.payload.results);
+
+      return {
+        ...state,
+        peoples:
+          action.payload.page === 1
+            ? action.payload.results
+            : state.peoples.concat(action.payload.results),
+      };
+    },
     fetchPeoplesEnd: (state) => ({
       ...state,
       peoplesLoading: false,

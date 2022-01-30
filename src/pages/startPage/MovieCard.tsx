@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import FavoriteService from "../../services/FavoriteServices";
 import { CardMovieProps } from "./StartPage";
@@ -61,6 +61,9 @@ const Description = styled.div`
   display: flex;
   justify-content: center;
   overflow: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   height: 150px;
   margin: 30px 0 15px 0;
   padding: 0 10px 0 10px;
@@ -99,18 +102,23 @@ const MovieCard: FC<CardMovieProps> = ({
   popularity,
   poster_path,
   overview,
-  isLiked,
+  isLiked = false,
   id,
 }) => {
-  const [liked, setLiked] = useState(isLiked);
+  const [liked, setLiked] = useState(false);
   const onLikeClick = useCallback(() => {
     setLiked((prevState) => !prevState);
 
     FavoriteService.addFavoriteElement(
       { title, popularity, poster_path, overview, id },
-      "moviesS"
+      "movies"
     );
   }, [setLiked, title, popularity, poster_path, overview, id]);
+
+  useEffect(() => {
+    setLiked(isLiked);
+  }, [isLiked, setLiked]);
+
   return (
     <MovieCardWrapper>
       <HeaderContainer>

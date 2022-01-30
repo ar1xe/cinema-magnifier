@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { Peoples } from "../peoplePage/PeoplePage";
 
@@ -10,6 +10,39 @@ const PeopleCardWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 30px 15px 30px 15px;
+  width: 700px;
+`;
+
+const PeopleCardContent = styled.div`
+  display: flex;
+`;
+
+const ImgAndNameActor = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+`;
+
+const DescriptionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  width: 100%;
+`;
+
+const FilmContent = styled.div`
+  display: flex;
+`;
+
+const Film = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25px;
 `;
 
 const Img = styled.img`
@@ -23,33 +56,55 @@ const NameContainer = styled.div`
 `;
 
 const FavoriteActorsCard: FC<Peoples> = ({ name, profile_path, known_for }) => {
+  const [arr, setArr] = useState([""]);
+  const [value, setValue] = useState("");
+
+  const add = () => {
+    setArr([...arr, value]);
+  };
+
+  // const inputValue = () => {
+  //   setValue(event?.target?.value);
+  // };
+
   return (
     <>
       <PeopleCardWrapper>
-        <div>
-          <Img
-            src={BASE_URL + profile_path + API_KEY}
-            width={160}
-            height={240}
-          />
-        </div>
-        <div></div>
-        <NameContainer>{name}</NameContainer>
+        <PeopleCardContent>
+          <ImgAndNameActor>
+            <div>
+              <Img
+                src={BASE_URL + profile_path + API_KEY}
+                width={160}
+                height={240}
+              />
+            </div>
 
-        <div>
-          {known_for?.map((i) => (
-            <p>{i.original_title}</p>
-          ))}
-        </div>
-        <div>
-          {known_for?.map((poster) => (
-            <div>{BASE_URL + poster.poster_path}</div>
-          ))}
-        </div>
-
-        {known_for?.map((i) => (
-          <p>{i.release_date}</p>
-        ))}
+            <NameContainer>{name}</NameContainer>
+          </ImgAndNameActor>
+          <DescriptionWrapper>
+            <FilmContent>
+              {known_for?.map((nameMov) => (
+                <Film>
+                  <span> {nameMov.original_title} </span>
+                  <div>
+                    <img
+                      src={BASE_URL + nameMov.poster_path}
+                      width={130}
+                      height={190}
+                      alt="111"
+                    />
+                  </div>
+                  <span> {nameMov.release_date} </span>
+                </Film>
+              ))}
+            </FilmContent>
+          </DescriptionWrapper>
+          <div>
+            {/* <input value={value} onChange={inputValue} /> */}
+            <input onClick={add} />
+          </div>
+        </PeopleCardContent>
       </PeopleCardWrapper>
     </>
   );

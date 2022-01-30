@@ -47,6 +47,9 @@ const Description = styled.div`
   display: flex;
   justify-content: center;
   overflow: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   height: 150px;
   margin: 30px 0 15px 0;
   padding: 0 10px 0 10px;

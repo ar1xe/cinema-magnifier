@@ -25,11 +25,13 @@ const searchPeopleSlice = createSlice({
     fetchPeopleSearchSuccess: (
       state,
       action: PayloadAction<GetPeoplesInterface>
-    ) => ({
-      ...state,
-      searchPeoples: action.payload.results,
-      //   state.searchPeoples.push(action.payload.results)
-    }),
+    ) => {
+      console.log(action.payload.results);
+      return {
+        ...state,
+        searchPeoples: action.payload.results,
+      };
+    },
   },
 });
 

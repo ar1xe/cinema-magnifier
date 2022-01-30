@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Button } from "antd";
 import { CardPeopleProps } from "./PeoplePage";
@@ -49,11 +49,11 @@ const SVG = styled.div.attrs((props: { isLiked: boolean }) => props)`
 const PeopleCard: FC<CardPeopleProps> = ({
   name,
   profile_path,
-  isLiked,
+  isLiked = false,
   id,
   known_for,
 }) => {
-  const [liked, setLiked] = useState(isLiked);
+  const [liked, setLiked] = useState(false);
   const onLikeClick = useCallback(() => {
     setLiked((prevState) => !prevState);
 
@@ -63,13 +63,17 @@ const PeopleCard: FC<CardPeopleProps> = ({
     );
   }, [setLiked, id, profile_path, name, known_for]);
 
+  useEffect(() => {
+    setLiked(isLiked);
+  }, [isLiked, setLiked]);
+
   return (
     <PeopleCardWrapper>
       <div>
         <Img src={BASE_URL + profile_path + API_KEY} width={160} height={240} />
       </div>
       <NameContainer>{name}</NameContainer>
-
+      <div></div>
       <div>
         <Button type="primary" onClick={onLikeClick}>
           <SVG isLiked={liked}>

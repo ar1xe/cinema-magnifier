@@ -3,6 +3,7 @@ import {
   fetchPeopleSearchSuccess,
   fetchSearchPeoplesBegin,
 } from "../../slices/searchPeopleSlice";
+import { fetchPeoplesSuccess } from "../../slices/peoplesSlice";
 
 import { GetPeoplesInterface } from "../../../pages/peoplePage/PeoplePage";
 import { fetchSearchPeoples } from "../actions/searchPeoplesAction";
@@ -15,12 +16,13 @@ export function* fetchSearchPeoplesWorker(
     yield put(fetchSearchPeoplesBegin(true));
     const currentSearchPeople: GetPeoplesInterface = yield call(
       SearchServices.getPeopleSearch,
-      action.payload
+      action.payload.page,
+      action.payload.query
     );
     yield put(
-      fetchPeopleSearchSuccess({
+      fetchPeoplesSuccess({
         results: currentSearchPeople.results,
-        page: action.payload,
+        page: action.payload.page,
       })
     );
   } catch (error) {

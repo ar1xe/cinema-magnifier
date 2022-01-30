@@ -16,8 +16,16 @@ const FavoritesPageWrapper = styled.div`
   flex-direction: column;
 `;
 
+const MovieWrapper = styled.div`
+  width: 1050px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
 const ActorsWrapper = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 const FavoritesPage: FC = () => {
@@ -26,13 +34,11 @@ const FavoritesPage: FC = () => {
 
   useEffect(() => {
     (async () => {
-      const { actors, moviesS } = await FavoriteService.fetchFavorites();
-      setFavoriteMovies(moviesS);
+      const { actors, movies } = await FavoriteService.fetchFavorites();
+      setFavoriteMovies(movies);
       setFavoriteActors(actors);
     })();
   }, [setFavoriteActors, setFavoriteMovies]);
-
-  console.log(favoriteActors);
 
   return (
     <>
@@ -47,7 +53,6 @@ const FavoritesPage: FC = () => {
               original_title,
               release_date,
               known_for,
-              poster_path,
             }) => {
               return (
                 <FavoriteActorsCard
@@ -58,13 +63,12 @@ const FavoritesPage: FC = () => {
                   original_title={original_title}
                   release_date={release_date}
                   known_for={known_for}
-                  poster_path={poster_path}
                 />
               );
             }
           )}
         </ActorsWrapper>
-        <div>
+        <MovieWrapper>
           {favoriteMovies.map(
             ({ title, popularity, poster_path, overview, id }) => (
               <FavoriteMovieCard
@@ -77,7 +81,7 @@ const FavoritesPage: FC = () => {
               />
             )
           )}
-        </div>
+        </MovieWrapper>
       </FavoritesPageWrapper>
       <Footer />
     </>
