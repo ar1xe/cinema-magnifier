@@ -1,14 +1,18 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import MovieCard from "./MovieCard";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getMovies } from "../../redux/selectors/moviesSelectors";
 import { fetchMovies } from "../../redux/saga/actions/movieActions";
+import { getMovies } from "../../redux/selectors/moviesSelectors";
 import FavoriteService from "../../services/FavoriteServices";
-import { Input } from "antd";
+import { getMovieSearch } from "../../redux/selectors/searchMovieSelector";
+import { fetchSearchMovies } from "../../redux/saga/actions/searchMoviesAction";
+import SearchServices from "../../services/SearchServices";
+
+const { Search } = Input;
 
 const StartPageWrapper = styled.div`
   width: 100%;
@@ -33,6 +37,16 @@ const StyleBtn = styled(Button)`
 
 const InputWrapper = styled.div`
   margin-top: 25px;
+`;
+
+const CustomSearch = styled(Search)`
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  outline: none;
+  margin-top: 30px;
+  height: 60px;
+  width: 550px;
 `;
 
 export interface CardMovieProps extends Movies {
@@ -66,7 +80,8 @@ const StartPage: FC = () => {
   const movies: Movies[] = useSelector(getMovies);
   const [page, setPage] = useState(1);
   const [currentFavorites, setCurrentFavorite] = useState<Movies[]>([]);
-  const [value, setValue] = useState("");
+  const [query, setQuery] = useState("");
+  const searchMovies: Movies[] = useSelector(getMovieSearch);
 
   useEffect(() => {
     const fetchFavoritesMovies = async () => {
@@ -79,31 +94,53 @@ const StartPage: FC = () => {
 
   useEffect(() => {
     dispatch({ type: fetchMovies.type, payload: page });
-  }, [page, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const changePagePlus = () => {
+  const onClickShowMore = () => {
     setPage(page + 1);
+    if (Boolean(query)) {
+      return dispatch({
+        type: fetchSearchMovies.type,
+        payload: { page: page + 1, query },
+      });
+    }
+    dispatch({ type: fetchMovies.type, payload: page + 1 });
   };
 
-  // const filteredMovies = movies.filter((movie) => {
-  //   return movie.title.toLowerCase().includes(value.toLocaleLowerCase());
-  // });
+  const onSearchChange = useCallback(
+    ({ nativeEvent: { data: searchString } }) => {
+      setQuery(searchString);
+    },
+    []
+  );
+
+  const onSearch = useCallback(
+    (searchString) => {
+      if (Boolean(searchString)) {
+        return dispatch({
+          type: fetchSearchMovies.type,
+          payload: { page, query: searchString },
+        });
+      }
+      setQuery("");
+    },
+    [page, dispatch]
+  );
 
   return (
     <>
       <Header />
       <StartPageWrapper>
-        <InputWrapper>
-          <form>
-            <Input
-              type="text"
-              placeholder="Search movies..."
-              onChange={(event) => {
-                setValue(event.target.value);
-              }}
-            />
-          </form>
-        </InputWrapper>
+        <div>
+          <CustomSearch
+            placeholder="Search movies..."
+            allowClear
+            onSearch={onSearch}
+            onChange={onSearchChange}
+          />
+        </div>
+        <InputWrapper></InputWrapper>
         <MoviesContainer>
           {movies.map(({ title, poster_path, popularity, id, overview }) => {
             const isLiked = currentFavorites.some((elem) => elem.id === id);
@@ -121,7 +158,7 @@ const StartPage: FC = () => {
           })}
         </MoviesContainer>
         <div>
-          <StyleBtn type="primary" onClick={changePagePlus}>
+          <StyleBtn type="primary" onClick={onClickShowMore}>
             More...
           </StyleBtn>
         </div>

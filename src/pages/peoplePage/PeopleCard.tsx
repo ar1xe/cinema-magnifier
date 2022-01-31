@@ -23,12 +23,17 @@ const PeopleCardWrapper = styled.div`
 
 const Img = styled.img`
   border-radius: 15px 15px 5px 5px;
+  transition: all 0.3s;
+  :hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
 `;
 
 const NameContainer = styled.div`
   display: flex;
   justify-content: center;
-
+  margin: 10px 0 10px 0;
   color: #002640;
   /* transition: all 3s;
   :hover {
@@ -73,7 +78,7 @@ const PeopleCard: FC<CardPeopleProps> = ({
         <Img src={BASE_URL + profile_path + API_KEY} width={160} height={240} />
       </div>
       <NameContainer>{name}</NameContainer>
-      <div></div>
+
       <div>
         <Button type="primary" onClick={onLikeClick}>
           <SVG isLiked={liked}>

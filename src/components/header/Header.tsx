@@ -29,7 +29,7 @@ const Header: FC = () => {
             <Link to="/people">People</Link>
           </span>
           <span>
-            <Link to="/yet">Yet</Link>
+            <Link to="/other">Other</Link>
           </span>
         </NavBar>
         <BtnsNavBar>

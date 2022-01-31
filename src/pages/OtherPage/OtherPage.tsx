@@ -3,23 +3,23 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 
-const YetPageWrapper = styled.div`
+const OtherPageWrapper = styled.div`
   min-height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const YetPage: FC = () => {
+const OtherPage: FC = () => {
   return (
     <>
       <Header />
-      <YetPageWrapper>
-        <h2>YetPage</h2>
-      </YetPageWrapper>
+      <OtherPageWrapper>
+        <h2>OtherPage</h2>
+      </OtherPageWrapper>
       <Footer />
     </>
   );
 };
 
-export default YetPage;
+export default OtherPage;

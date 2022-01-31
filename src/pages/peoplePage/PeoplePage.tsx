@@ -33,61 +33,14 @@ const StyleBtn = styled(Button)`
   margin-bottom: 30px;
 `;
 
-const InputWrapper = styled.div`
-  margin: 20px auto;
-  position: relative;
-  width: 400px;
-  font-size: 30px;
-`;
-
 const CustomSearch = styled(Search)`
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
   outline: none;
-  border: 2px solid #aaa;
+  margin-top: 30px;
   height: 60px;
-`;
-
-// const ClearButton = styled.button`
-//   position: absolute;
-//   top: 10px;
-//   bottom: 10px;
-//   right: 10px;
-//   color: #666;
-//   border: 0;
-//   display: none;
-//   padding: 0 10px;
-//   border-radius: 50%;
-//   background-color: #fff;
-//   transition: background 200ms;
-//   outline: none;
-
-//   &:hover {
-//     background-color: #eee;
-//   }
-
-//   input:valid {
-//     display: block;
-//   }
-// `;
-
-const ClearButton = styled.button.attrs((props: { isEmpty: boolean }) => props)`
-  position: absolute;
-  top: 5px;
-  bottom: 10px;
-  right: 10px;
-  color: #666;
-  border: 0;
-  display: ${(props) => (props.isEmpty ? `none` : `block`)};
-  padding: 0 5px;
-  border-radius: 50%;
-  background-color: #fff;
-  transition: background 200ms;
-  outline: none;
-  &:hover {
-    background-color: #eee;
-  }
+  width: 550px;
 `;
 
 export interface CardPeopleProps extends Peoples {
@@ -126,23 +79,17 @@ const PeoplePage: FC = () => {
   const searchPeoples: Peoples[] = useSelector(getPeopleSearch);
 
   useEffect(() => {
-    (async () => {
+    const fetchFavoritesPeoples = async () => {
       const { actors } = await FavoriteService.fetchFavorites();
       setCurrentFavorite(actors);
-    })();
+    };
+    fetchFavoritesPeoples();
   }, []);
 
   useEffect(() => {
     dispatch({ type: fetchPeoples.type, payload: page });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: fetchSearchPeoples.type,
-  //     payload: { page, query },
-  //   });
-  // }, [page, query, dispatch]);
 
   const onClickShowMore = () => {
     setPage(page + 1);
@@ -161,10 +108,6 @@ const PeoplePage: FC = () => {
     },
     []
   );
-
-  // const filteredActors = people.filter((actor) => {
-  //   return actor.name.toLowerCase().includes(value.toLocaleLowerCase());
-  // });
 
   const onSearch = useCallback(
     (searchString) => {

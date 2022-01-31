@@ -1,10 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import {
-  fetchPeopleSearchSuccess,
-  fetchSearchPeoplesBegin,
-} from "../../slices/searchPeopleSlice";
+import { fetchSearchPeoplesBegin } from "../../slices/searchPeopleSlice";
 import { fetchPeoplesSuccess } from "../../slices/peoplesSlice";
-
 import { GetPeoplesInterface } from "../../../pages/peoplePage/PeoplePage";
 import { fetchSearchPeoples } from "../actions/searchPeoplesAction";
 import SearchServices from "../../../services/SearchServices";
