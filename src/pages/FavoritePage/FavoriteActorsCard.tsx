@@ -1,6 +1,11 @@
-import React, { FC, useState } from "react";
+/* eslint-disable @typescript-eslint/no-shadow */
+import React, { ChangeEvent, FC, useState } from "react";
 import styled from "styled-components";
 import { Peoples } from "../peoplePage/PeoplePage";
+import { Input, Button } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { AddNoteActorsServices } from "../../services/AddNoteActorsServices";
+import NotesActors from "../../components/notesActors/NotesActors";
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
@@ -23,6 +28,7 @@ const ImgAndNameActor = styled.div`
   justify-content: center;
   align-items: center;
   width: 200px;
+  margin-right: 25px;
 `;
 
 const DescriptionWrapper = styled.div`
@@ -38,30 +44,99 @@ const FilmContent = styled.div`
 `;
 
 const Film = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 25px;
+  /* margin-left: 25px; */
 `;
 
 const Img = styled.img`
   border-radius: 15px 15px 5px 5px;
+  transition: all 0.3s;
+  :hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
 `;
 
 const NameContainer = styled.div`
   display: flex;
   justify-content: center;
   color: #002640;
+  margin: 10px 0 10px 0;
+  font-size: 15px;
 `;
 
-const FavoriteActorsCard: FC<Peoples> = ({ name, profile_path, known_for }) => {
-  const [arr, setArr] = useState([""]);
-  const [value, setValue] = useState("");
+const NameFilm = styled.div`
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+`;
 
-  const add = () => {
-    setArr([...arr, value]);
+const ReleaseFilm = styled.div`
+  margin-bottom: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  font-size: 12px;
+`;
+
+const ImgFilm = styled.img`
+  border-radius: 15px 15px 5px 5px;
+  transition: all 0.3s;
+  :hover {
+    transition: 0.3s;
+    transform: scale(1.03);
+  }
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+`;
+
+export interface INote {
+  noteName: string;
+}
+
+const FavoriteActorsCard: FC<Peoples> = ({ name, profile_path, known_for }) => {
+  const [note, setNote] = useState("");
+  const [noteList, setNoteList] = useState<INote[]>([]);
+
+  const handlerNote = (event: ChangeEvent<HTMLInputElement>): void => {
+    if (event.target.name === "note") {
+      setNote(event.target.value);
+    }
   };
+
+  const addNote = (): void => {
+    const newNote = { noteName: note };
+    setNoteList([...noteList, newNote]);
+    setNote("");
+  };
+
+  const deleteNote = (noteNameToDelete: string): void => {
+    setNoteList(
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      noteList.filter((note) => {
+        return note.noteName != noteNameToDelete;
+      })
+    );
+  };
+
+  // const addNote = async (value: any) => {
+  //   const response = await AddNoteActorsServices().addNoteActor({ ...value });
+  // };
+
+  // const [value, setValue] = useState("");
+
+  // const add = () => {
+  //   setArr([...arr, value]);
+  // };
 
   // const inputValue = () => {
   //   setValue(event?.target?.value);
@@ -86,25 +161,40 @@ const FavoriteActorsCard: FC<Peoples> = ({ name, profile_path, known_for }) => {
             <FilmContent>
               {known_for?.map((nameMov) => (
                 <Film>
-                  <span> {nameMov.original_title} </span>
-                  <div>
-                    <img
-                      src={BASE_URL + nameMov.poster_path}
-                      width={130}
-                      height={190}
-                      alt="111"
-                    />
-                  </div>
-                  <span> {nameMov.release_date} </span>
+                  <NameFilm> {nameMov.original_title} </NameFilm>
+                  <ImgFilm
+                    src={BASE_URL + nameMov.poster_path}
+                    width={130}
+                    height={190}
+                    alt="111"
+                  />
+                  <ReleaseFilm> {nameMov.release_date} </ReleaseFilm>
                 </Film>
               ))}
             </FilmContent>
           </DescriptionWrapper>
-          <div>
-            {/* <input value={value} onChange={inputValue} /> */}
-            <input onClick={add} />
-          </div>
         </PeopleCardContent>
+        <div>
+          {noteList.map((note: INote, key: number) => {
+            return (
+              <NotesActors key={key} note={note} deleteNote={deleteNote} />
+            );
+          })}
+        </div>
+        <InputWrapper>
+          <Input.Group compact>
+            <Input
+              style={{ width: "calc(100% - 110px)" }}
+              placeholder="   leave a note..."
+              name="note"
+              value={note}
+              onChange={handlerNote}
+            />
+            <Button type="primary" onClick={addNote}>
+              Add Note
+            </Button>
+          </Input.Group>
+        </InputWrapper>
       </PeopleCardWrapper>
     </>
   );

@@ -17,6 +17,12 @@ const favorites = {
   actors: [],
   movies: [],
 };
+const notes = [];
+
+app.post("/notes", (req, res) => {
+  if (req.body.element.note) notes.push(req.body.element);
+  res.status(200).json({ note });
+});
 
 app.post("/registration", (req, res) => {
   // console.log(req.body);
