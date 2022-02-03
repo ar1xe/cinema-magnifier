@@ -4,7 +4,6 @@ import cors from "cors";
 const PORT = process.env.PORT || 3333;
 
 const app = express();
-// app.use(favicon(__dirname + "./public/favicon.png"));
 
 app.use(express.json());
 app.use(
@@ -17,11 +16,44 @@ const favorites = {
   actors: [],
   movies: [],
 };
-const notes = [];
 
-app.post("/notes", (req, res) => {
-  if (req.body.element.note) notes.push(req.body.element);
-  res.status(200).json({ note });
+app.post("/addNote", (req, res) => {
+  if (req.body.type === "actors") {
+    const updatedFavoriteActors = favorites.actors.map((actor) => {
+      if (actor.id === req.body.parentId) {
+        const notes = actor?.notes ? actor.notes : [];
+        notes.push(req.body.newNote);
+
+        return {
+          ...actor,
+          notes,
+        };
+      }
+      return actor;
+    });
+    favorites.actors = updatedFavoriteActors;
+    res.status(200).json(req.body.newNote);
+  }
+});
+
+app.post("/deleteNote", (req, res) => {
+  let updatedNotes = [];
+  if (req.body.type === "actors") {
+    const updatedFavoriteActors = favorites.actors.map((actor) => {
+      if (actor.id === req.body.parentId) {
+        updatedNotes = actor.notes.filter(
+          (note) => note.id !== req.body.currentNote.id
+        );
+        return {
+          ...actor,
+          notes: updatedNotes,
+        };
+      }
+      return actor;
+    });
+    favorites.actors = updatedFavoriteActors;
+    res.status(200).json(updatedNotes);
+  }
 });
 
 app.post("/registration", (req, res) => {

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -32,13 +32,19 @@ const FavoritesPage: FC = () => {
   const [favoriteActors, setFavoriteActors] = useState<Peoples[]>([]);
   const [favoriteMovies, setFavoriteMovies] = useState<CardMovieProps[]>([]);
 
+  const fetchFavorites = useCallback(async () => {
+    const { actors, movies } = await FavoriteService.fetchFavorites();
+    setFavoriteMovies(movies);
+    setFavoriteActors(actors);
+  }, []);
+
   useEffect(() => {
-    (async () => {
-      const { actors, movies } = await FavoriteService.fetchFavorites();
-      setFavoriteMovies(movies);
-      setFavoriteActors(actors);
-    })();
-  }, [setFavoriteActors, setFavoriteMovies]);
+    fetchFavorites();
+  }, [fetchFavorites]);
+
+  const deleteFavoriteElement = useCallback(() => {
+    fetchFavorites();
+  }, [fetchFavorites]);
 
   return (
     <>
@@ -53,6 +59,7 @@ const FavoritesPage: FC = () => {
               original_title,
               release_date,
               known_for,
+              notes,
             }) => {
               return (
                 <FavoriteActorsCard
@@ -63,6 +70,8 @@ const FavoritesPage: FC = () => {
                   original_title={original_title}
                   release_date={release_date}
                   known_for={known_for}
+                  notes={notes}
+                  deleteFavoriteElement={deleteFavoriteElement}
                 />
               );
             }

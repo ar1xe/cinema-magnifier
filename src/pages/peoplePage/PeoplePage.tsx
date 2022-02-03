@@ -54,6 +54,7 @@ export interface GetPeoplesInterface {
 }
 
 export interface Peoples {
+  notes?: Note[];
   id: string;
   profile_path: string;
   name: string;
@@ -62,6 +63,12 @@ export interface Peoples {
   original_title?: string;
   release_date?: string;
   poster_path?: string;
+  deleteFavoriteElement?: () => void;
+}
+
+export interface Note {
+  id: string;
+  value: string;
 }
 
 export interface Info {
@@ -93,7 +100,7 @@ const PeoplePage: FC = () => {
 
   const onClickShowMore = () => {
     setPage(page + 1);
-    if (Boolean(query)) {
+    if (Boolean(query) && query !== "undefined") {
       return dispatch({
         type: fetchSearchPeoples.type,
         payload: { page: page + 1, query },
@@ -104,22 +111,24 @@ const PeoplePage: FC = () => {
 
   const onSearchChange = useCallback(
     ({ nativeEvent: { data: searchString } }) => {
-      setQuery(searchString);
+      setQuery((prevState) => prevState + searchString);
     },
     []
   );
 
   const onSearch = useCallback(
     (searchString) => {
-      if (Boolean(searchString)) {
+      if (Boolean(searchString) && searchString !== "undefined") {
+        setPage(1);
         return dispatch({
           type: fetchSearchPeoples.type,
-          payload: { page, query: searchString },
+          payload: { page: 1, query: searchString },
         });
       }
       setQuery("");
+      dispatch({ type: fetchPeoples.type, payload: 1 });
     },
-    [page, dispatch]
+    [dispatch]
   );
 
   return (

@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { INote } from "../../pages/FavoritePage/FavoriteActorsCard";
+import React, { FC, useCallback, useEffect } from "react";
+import { Note } from "../../pages/peoplePage/PeoplePage";
 import { Button } from "antd";
 import { Input } from "antd";
 import styled from "styled-components";
@@ -15,21 +15,19 @@ const ButtonNote = styled(Button)`
 `;
 
 interface Props {
-  note: INote;
-  deleteNote(noteNameToDelete: string): void;
+  note: Note;
+  deleteNote(currentNote: Note): void;
 }
 
 const NotesActors: FC<Props> = ({ note, deleteNote }) => {
   return (
     <>
       <NoteContainer>
-        <Input.Group compact>
-          <Input style={{ width: "calc(100%)" }} defaultValue={note.noteName} />
-        </Input.Group>
+        <span style={{ width: "calc(100%)" }}>{note.value}</span>
         <ButtonNote
           danger
           onClick={() => {
-            deleteNote(note.noteName);
+            deleteNote(note);
           }}
         >
           Delete Note

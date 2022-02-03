@@ -24,7 +24,7 @@ const StartPageWrapper = styled.div`
 `;
 
 const MoviesContainer = styled.div`
-  width: 1050px;
+  width: 65%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -73,6 +73,12 @@ export interface Movies {
   popularity: number;
   overview: string;
   poster_path: string;
+  note?: Note[];
+}
+
+export interface Note {
+  id: string;
+  value: string;
 }
 
 const StartPage: FC = () => {

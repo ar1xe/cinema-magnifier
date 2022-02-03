@@ -1,12 +1,17 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useCallback, useState } from "react";
 import styled from "styled-components";
-import { Peoples } from "../peoplePage/PeoplePage";
+import { Note, Peoples } from "../peoplePage/PeoplePage";
 import { Input, Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined, UserOutlined } from "@ant-design/icons";
 import { AddNoteActorsServices } from "../../services/AddNoteActorsServices";
 import NotesActors from "../../components/notesActors/NotesActors";
+import axios from "axios";
+import nextId from "react-id-generator";
+import { relative } from "path/posix";
+import FavoriteService from "../../services/FavoriteServices";
 
+const SERVER_URL = "http://localhost:3333/";
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
 
@@ -22,13 +27,21 @@ const PeopleCardContent = styled.div`
   display: flex;
 `;
 
-const ImgAndNameActor = styled.div`
+const ImgAndNameActorWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 200px;
   margin-right: 25px;
+`;
+
+const ImgAndNameActorContainer = styled.div`
+  position: relative;
+  transition: all 0.3s;
+  &:hover .closeIcon {
+    display: block;
+  }
 `;
 
 const DescriptionWrapper = styled.div`
@@ -54,11 +67,6 @@ const Film = styled.div`
 
 const Img = styled.img`
   border-radius: 15px 15px 5px 5px;
-  transition: all 0.3s;
-  :hover {
-    transition: 0.3s;
-    transform: scale(1.1);
-  }
 `;
 
 const NameContainer = styled.div`
@@ -99,13 +107,25 @@ const InputWrapper = styled.div`
   display: flex;
 `;
 
-export interface INote {
-  noteName: string;
-}
+const CircleOutlined = styled(CloseCircleOutlined)`
+  color: #f32c2cc7;
+  font-size: 34px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  display: none;
+`;
 
-const FavoriteActorsCard: FC<Peoples> = ({ name, profile_path, known_for }) => {
+const FavoriteActorsCard: FC<Peoples> = ({
+  name,
+  profile_path,
+  known_for,
+  id,
+  notes,
+  deleteFavoriteElement,
+}) => {
   const [note, setNote] = useState("");
-  const [noteList, setNoteList] = useState<INote[]>([]);
+  const [noteList, setNoteList] = useState<Note[]>(notes || []);
 
   const handlerNote = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.name === "note") {
@@ -113,50 +133,62 @@ const FavoriteActorsCard: FC<Peoples> = ({ name, profile_path, known_for }) => {
     }
   };
 
-  const addNote = (): void => {
-    const newNote = { noteName: note };
-    setNoteList([...noteList, newNote]);
-    setNote("");
+  const addNote = () => {
+    const newNote: Note = { value: note, id: nextId() };
+    // setNoteList([...noteList, newNote]);
+
+    const addNotes = async () => {
+      const response = await axios.post(SERVER_URL + "addNote", {
+        newNote,
+        parentId: id,
+        type: "actors",
+      });
+
+      setNoteList([...noteList, response.data]);
+      setNote("");
+    };
+    addNotes();
   };
 
-  const deleteNote = (noteNameToDelete: string): void => {
-    setNoteList(
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      noteList.filter((note) => {
-        return note.noteName != noteNameToDelete;
-      })
+  const deleteNote = (currentNote: Note): void => {
+    const deleteNote = async () => {
+      const response = await axios.post(SERVER_URL + "deleteNote", {
+        currentNote,
+        parentId: id,
+        type: "actors",
+      });
+
+      setNoteList(response.data);
+    };
+    deleteNote();
+  };
+
+  const deleteCard = useCallback(async () => {
+    await FavoriteService.addFavoriteElement(
+      { name, profile_path, id, known_for },
+      "actors"
     );
-  };
-
-  // const addNote = async (value: any) => {
-  //   const response = await AddNoteActorsServices().addNoteActor({ ...value });
-  // };
-
-  // const [value, setValue] = useState("");
-
-  // const add = () => {
-  //   setArr([...arr, value]);
-  // };
-
-  // const inputValue = () => {
-  //   setValue(event?.target?.value);
-  // };
+    if (deleteFavoriteElement) {
+      deleteFavoriteElement();
+    }
+  }, [name, profile_path, id, known_for, deleteFavoriteElement]);
 
   return (
     <>
       <PeopleCardWrapper>
         <PeopleCardContent>
-          <ImgAndNameActor>
-            <div>
+          <ImgAndNameActorWrapper>
+            <ImgAndNameActorContainer>
               <Img
                 src={BASE_URL + profile_path + API_KEY}
                 width={160}
                 height={240}
               />
-            </div>
+              <CircleOutlined className="closeIcon" onClick={deleteCard} />
+            </ImgAndNameActorContainer>
 
             <NameContainer>{name}</NameContainer>
-          </ImgAndNameActor>
+          </ImgAndNameActorWrapper>
           <DescriptionWrapper>
             <FilmContent>
               {known_for?.map((nameMov) => (
@@ -175,9 +207,9 @@ const FavoriteActorsCard: FC<Peoples> = ({ name, profile_path, known_for }) => {
           </DescriptionWrapper>
         </PeopleCardContent>
         <div>
-          {noteList.map((note: INote, key: number) => {
+          {noteList.map((note: Note) => {
             return (
-              <NotesActors key={key} note={note} deleteNote={deleteNote} />
+              <NotesActors key={note.id} note={note} deleteNote={deleteNote} />
             );
           })}
         </div>
