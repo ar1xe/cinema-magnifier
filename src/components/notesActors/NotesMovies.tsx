@@ -10,7 +10,8 @@ const NoteContainer = styled.div`
 `;
 
 const ButtonNote = styled(Button)`
-  margin-left: 0%;
+  /* margin-left: 0%; */
+  margin: 0 10px 0 0;
 `;
 
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
   deleteNote(currentNote: Note): void;
 }
 
-const NotesActors: FC<Props> = ({ note, deleteNote }) => {
+const NotesMovies: FC<Props> = ({ note, deleteNote }) => {
   return (
     <>
       <NoteContainer>
@@ -36,4 +37,4 @@ const NotesActors: FC<Props> = ({ note, deleteNote }) => {
   );
 };
 
-export default NotesActors;
+export default NotesMovies;

@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
+import EmptyFavorites from "../../components/emptyFavorites/EmptyFavorites";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import FavoriteService from "../../services/FavoriteServices";
@@ -51,6 +52,35 @@ const FavoritesPage: FC = () => {
       <Header />
       <FavoritesPageWrapper>
         <ActorsWrapper>
+          <div>
+            {!favoriteActors.length && !favoriteMovies.length ? (
+              <EmptyFavorites />
+            ) : (
+              favoriteActors.map(
+                ({
+                  name,
+                  profile_path,
+                  id,
+                  original_title,
+                  release_date,
+                  known_for,
+                  notes,
+                }) => {
+                  <FavoriteActorsCard
+                    name={name}
+                    profile_path={profile_path}
+                    key={id}
+                    id={id}
+                    original_title={original_title}
+                    release_date={release_date}
+                    known_for={known_for}
+                    notes={notes}
+                    deleteFavoriteElement={deleteFavoriteElement}
+                  />;
+                }
+              )
+            )}
+          </div>
           {favoriteActors.map(
             ({
               name,
@@ -79,7 +109,7 @@ const FavoritesPage: FC = () => {
         </ActorsWrapper>
         <MovieWrapper>
           {favoriteMovies.map(
-            ({ title, popularity, poster_path, overview, id }) => (
+            ({ title, popularity, poster_path, overview, id, notes }) => (
               <FavoriteMovieCard
                 title={title}
                 popularity={popularity}
@@ -87,6 +117,8 @@ const FavoritesPage: FC = () => {
                 overview={overview}
                 key={id}
                 id={id}
+                notes={notes}
+                deleteFavoriteElement={deleteFavoriteElement}
               />
             )
           )}

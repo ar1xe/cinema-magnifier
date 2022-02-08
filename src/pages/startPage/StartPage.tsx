@@ -73,7 +73,13 @@ export interface Movies {
   popularity: number;
   overview: string;
   poster_path: string;
-  note?: Note[];
+  notes?: Note[];
+  deleteFavoriteElement?: () => void;
+}
+
+export interface Note {
+  id: string;
+  value: string;
 }
 
 export interface Note {
@@ -105,7 +111,7 @@ const StartPage: FC = () => {
 
   const onClickShowMore = () => {
     setPage(page + 1);
-    if (Boolean(query)) {
+    if (Boolean(query) && query !== "undefined") {
       return dispatch({
         type: fetchSearchMovies.type,
         payload: { page: page + 1, query },
@@ -116,22 +122,24 @@ const StartPage: FC = () => {
 
   const onSearchChange = useCallback(
     ({ nativeEvent: { data: searchString } }) => {
-      setQuery(searchString);
+      setQuery((prevState) => prevState + searchString);
     },
     []
   );
 
   const onSearch = useCallback(
     (searchString) => {
-      if (Boolean(searchString)) {
+      if (Boolean(searchString) && searchString !== "undefined") {
+        setPage(1);
         return dispatch({
           type: fetchSearchMovies.type,
-          payload: { page, query: searchString },
+          payload: { page: 1, query: searchString },
         });
       }
       setQuery("");
+      dispatch({ type: fetchMovies.type, payload: 1 });
     },
-    [page, dispatch]
+    [dispatch]
   );
 
   return (

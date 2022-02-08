@@ -56,6 +56,45 @@ app.post("/deleteNote", (req, res) => {
   }
 });
 
+app.post("/addNoteMovie", (req, res) => {
+  if (req.body.type === "movies") {
+    const updatedFavoriteMovies = favorites.movies.map((movie) => {
+      if (movie.id === req.body.parentId) {
+        const notes = movie?.notes ? movie.notes : [];
+        notes.push(req.body.newNote);
+
+        return {
+          ...movie,
+          notes,
+        };
+      }
+      return movie;
+    });
+    favorites.movies = updatedFavoriteMovies;
+    res.status(200).json(req.body.newNote);
+  }
+});
+
+app.post("/deleteNoteMovie", (req, res) => {
+  let updatedNotes = [];
+  if (req.body.type === "movies") {
+    const updatedFavoriteMovies = favorites.movies.map((movie) => {
+      if (movie.id === req.body.parentId) {
+        updatedNotes = movie.notes.filter(
+          (note) => note.id !== req.body.currentNote.id
+        );
+        return {
+          ...movie,
+          notes: updatedNotes,
+        };
+      }
+      return movie;
+    });
+    favorites.movies = updatedFavoriteMovies;
+    res.status(200).json(updatedNotes);
+  }
+});
+
 app.post("/registration", (req, res) => {
   // console.log(req.body);
   if (req.body.element.email) users.push(req.body.element);
