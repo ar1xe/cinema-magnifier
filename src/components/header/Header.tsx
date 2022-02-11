@@ -6,6 +6,7 @@ import {
   HeaderContainer,
   NavBar,
   BtnsNavBar,
+  LogoContainer,
 } from "../header/HeaderStyledComponents";
 import { Button } from "antd";
 
@@ -13,11 +14,11 @@ const Header: FC = () => {
   return (
     <HeaderWrapper>
       <HeaderContainer>
-        <div>
+        <LogoContainer>
           <Link to="/">
             <img src={Logo} alt="logo" width={100} height={100} />
           </Link>
-        </div>
+        </LogoContainer>
         <NavBar>
           <span>
             <Link to="/">Movies</Link>
@@ -34,11 +35,9 @@ const Header: FC = () => {
         </NavBar>
         <BtnsNavBar>
           <Link to={"/signin"}>
-            {/* <button type="button">Sign In</button> */}
             <Button type="primary">Sign In</Button>
           </Link>
           <Link to={"/registration"}>
-            {/* <button type="button">Registration</button> */}
             <Button type="primary">Registration</Button>
           </Link>
         </BtnsNavBar>

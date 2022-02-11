@@ -10,13 +10,13 @@ import { getMovies } from "../../redux/selectors/moviesSelectors";
 import FavoriteService from "../../services/FavoriteServices";
 import { getMovieSearch } from "../../redux/selectors/searchMovieSelector";
 import { fetchSearchMovies } from "../../redux/saga/actions/searchMoviesAction";
-import SearchServices from "../../services/SearchServices";
+import { UpCircleTwoTone } from "@ant-design/icons";
+import { animateScroll as scroll } from "react-scroll";
 
 const { Search } = Input;
 
 const StartPageWrapper = styled.div`
   width: 100%;
-  /* min-height: 70vh; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +30,13 @@ const MoviesContainer = styled.div`
   justify-content: space-around;
 `;
 
+const SearchContainer = styled.div`
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StyleBtn = styled(Button)`
   width: 250px;
   margin-bottom: 30px;
@@ -40,13 +47,18 @@ const InputWrapper = styled.div`
 `;
 
 const CustomSearch = styled(Search)`
-  width: 100%;
-  padding: 10px;
+  width: 60%;
   box-sizing: border-box;
   outline: none;
   margin-top: 30px;
   height: 60px;
-  width: 550px;
+`;
+
+const ButtonScroll = styled(UpCircleTwoTone)`
+  font-size: 50px;
+  position: fixed;
+  bottom: 12px;
+  right: 15%;
 `;
 
 export interface CardMovieProps extends Movies {
@@ -93,7 +105,6 @@ const StartPage: FC = () => {
   const [page, setPage] = useState(1);
   const [currentFavorites, setCurrentFavorite] = useState<Movies[]>([]);
   const [query, setQuery] = useState("");
-  const searchMovies: Movies[] = useSelector(getMovieSearch);
 
   useEffect(() => {
     const fetchFavoritesMovies = async () => {
@@ -142,18 +153,22 @@ const StartPage: FC = () => {
     [dispatch]
   );
 
+  const customScroll = () => {
+    scroll.scrollToTop();
+  };
+
   return (
     <>
       <Header />
       <StartPageWrapper>
-        <div>
+        <SearchContainer>
           <CustomSearch
             placeholder="Search movies..."
             allowClear
             onSearch={onSearch}
             onChange={onSearchChange}
           />
-        </div>
+        </SearchContainer>
         <InputWrapper></InputWrapper>
         <MoviesContainer>
           {movies.map(({ title, poster_path, popularity, id, overview }) => {
@@ -177,6 +192,7 @@ const StartPage: FC = () => {
           </StyleBtn>
         </div>
       </StartPageWrapper>
+      <ButtonScroll onClick={customScroll} />
       <Footer />
     </>
   );

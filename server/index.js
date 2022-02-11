@@ -96,15 +96,12 @@ app.post("/deleteNoteMovie", (req, res) => {
 });
 
 app.post("/registration", (req, res) => {
-  // console.log(req.body);
   if (req.body.element.email) users.push(req.body.element);
   res.status(200).json({ isRegistration: true });
 });
 
 app.post("/authorization", (req, res) => {
   const currentUser = users.find((user) => {
-    // console.log(user.nickname);
-    // console.log(req.body.element.username);
     return user.nickname === req.body.element.username;
   });
 

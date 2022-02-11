@@ -10,11 +10,13 @@ import { getPeoples } from "../../redux/selectors/peoplesSelectors";
 import FavoriteService from "../../services/FavoriteServices";
 import { getPeopleSearch } from "../../redux/selectors/searchPeopleSelector";
 import { fetchSearchPeoples } from "../../redux/saga/actions/searchPeoplesAction";
-import SearchServices from "../../services/SearchServices";
+import { animateScroll as scroll } from "react-scroll";
+import { UpCircleTwoTone } from "@ant-design/icons";
 
 const { Search } = Input;
 
 const PeoplePageWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,10 +24,17 @@ const PeoplePageWrapper = styled.div`
 `;
 
 const PeoplePageContainer = styled.div`
-  width: 1050px;
+  width: 65%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+`;
+
+const SearchContainer = styled.div`
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyleBtn = styled(Button)`
@@ -34,13 +43,18 @@ const StyleBtn = styled(Button)`
 `;
 
 const CustomSearch = styled(Search)`
-  width: 100%;
-  padding: 10px;
+  width: 60%;
   box-sizing: border-box;
   outline: none;
   margin-top: 30px;
   height: 60px;
-  width: 550px;
+`;
+
+const ButtonScroll = styled(UpCircleTwoTone)`
+  font-size: 50px;
+  position: fixed;
+  bottom: 12px;
+  right: 15%;
 `;
 
 export interface CardPeopleProps extends Peoples {
@@ -83,7 +97,6 @@ const PeoplePage: FC = () => {
   const [page, setPage] = useState(1);
   const [currentFavorites, setCurrentFavorite] = useState<Peoples[]>([]);
   const [query, setQuery] = useState("");
-  const searchPeoples: Peoples[] = useSelector(getPeopleSearch);
 
   useEffect(() => {
     const fetchFavoritesPeoples = async () => {
@@ -131,18 +144,22 @@ const PeoplePage: FC = () => {
     [dispatch]
   );
 
+  const customScroll = () => {
+    scroll.scrollToTop();
+  };
+
   return (
     <>
       <Header />
       <PeoplePageWrapper>
-        <div>
+        <SearchContainer>
           <CustomSearch
             placeholder="Search actors..."
             allowClear
             onSearch={onSearch}
             onChange={onSearchChange}
           />
-        </div>
+        </SearchContainer>
         <PeoplePageContainer>
           {people.map(({ name, profile_path, id, known_for }) => {
             const isLiked = currentFavorites.some((elem) => elem.id === id);
@@ -164,6 +181,7 @@ const PeoplePage: FC = () => {
           </StyleBtn>
         </div>
       </PeoplePageWrapper>
+      <ButtonScroll onClick={customScroll} />
       <Footer />
     </>
   );

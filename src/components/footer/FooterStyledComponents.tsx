@@ -15,8 +15,21 @@ export const FooterWrapper = styled.div`
 
 export const FooterContainer = styled.div`
   display: flex;
-  width: 1050px;
+  width: 60%;
   height: 190px;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 850px) {
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  @media (max-width: 650px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
 `;

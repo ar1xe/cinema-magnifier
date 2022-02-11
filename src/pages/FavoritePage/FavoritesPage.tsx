@@ -12,16 +12,15 @@ import FavoriteMovieCard from "./FavoriteMovieCard";
 const FavoritesPageWrapper = styled.div`
   min-height: 70vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 `;
 
 const MovieWrapper = styled.div`
-  width: 1050px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ActorsWrapper = styled.div`
@@ -52,46 +51,19 @@ const FavoritesPage: FC = () => {
       <Header />
       <FavoritesPageWrapper>
         <ActorsWrapper>
-          <div>
-            {!favoriteActors.length && !favoriteMovies.length ? (
-              <EmptyFavorites />
-            ) : (
-              favoriteActors.map(
-                ({
-                  name,
-                  profile_path,
-                  id,
-                  original_title,
-                  release_date,
-                  known_for,
-                  notes,
-                }) => {
-                  <FavoriteActorsCard
-                    name={name}
-                    profile_path={profile_path}
-                    key={id}
-                    id={id}
-                    original_title={original_title}
-                    release_date={release_date}
-                    known_for={known_for}
-                    notes={notes}
-                    deleteFavoriteElement={deleteFavoriteElement}
-                  />;
-                }
-              )
-            )}
-          </div>
-          {favoriteActors.map(
-            ({
-              name,
-              profile_path,
-              id,
-              original_title,
-              release_date,
-              known_for,
-              notes,
-            }) => {
-              return (
+          {!favoriteActors.length && !favoriteMovies.length ? (
+            <EmptyFavorites />
+          ) : (
+            favoriteActors.map(
+              ({
+                name,
+                profile_path,
+                id,
+                original_title,
+                release_date,
+                known_for,
+                notes,
+              }) => (
                 <FavoriteActorsCard
                   name={name}
                   profile_path={profile_path}
@@ -103,8 +75,8 @@ const FavoritesPage: FC = () => {
                   notes={notes}
                   deleteFavoriteElement={deleteFavoriteElement}
                 />
-              );
-            }
+              )
+            )
           )}
         </ActorsWrapper>
         <MovieWrapper>

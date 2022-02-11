@@ -3,12 +3,10 @@ import React, { ChangeEvent, FC, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Note, Peoples } from "../peoplePage/PeoplePage";
 import { Input, Button } from "antd";
-import { CloseCircleOutlined, UserOutlined } from "@ant-design/icons";
-import { AddNoteActorsServices } from "../../services/AddNoteActorsServices";
+import { CloseCircleOutlined } from "@ant-design/icons";
 import NotesActors from "../../components/notesActors/NotesActors";
 import axios from "axios";
 import nextId from "react-id-generator";
-import { relative } from "path/posix";
 import FavoriteService from "../../services/FavoriteServices";
 
 const SERVER_URL = "http://localhost:3333/";
@@ -20,11 +18,17 @@ const PeopleCardWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 30px 15px 30px 15px;
-  width: 700px;
+  width: 100%;
 `;
 
 const PeopleCardContent = styled.div`
   display: flex;
+  @media (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const ImgAndNameActorWrapper = styled.div`
@@ -32,11 +36,15 @@ const ImgAndNameActorWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 200px;
+  width: 35%;
   margin-right: 25px;
+  @media (max-width: 485px) {
+    width: 100%;
+    margin-right: 0;
+  }
 `;
 
-const ImgAndNameActorContainer = styled.div`
+const ImgContainer = styled.div`
   position: relative;
   transition: all 0.3s;
   &:hover .closeIcon {
@@ -48,12 +56,15 @@ const DescriptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
   width: 100%;
 `;
 
 const FilmContent = styled.div`
   display: flex;
+  @media (max-width: 485px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Film = styled.div`
@@ -62,7 +73,6 @@ const Film = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* margin-left: 25px; */
 `;
 
 const Img = styled.img`
@@ -83,6 +93,9 @@ const NameFilm = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 12px;
+  @media (max-width: 485px) {
+    height: 100%;
+  }
 `;
 
 const ReleaseFilm = styled.div`
@@ -92,6 +105,9 @@ const ReleaseFilm = styled.div`
   align-items: center;
   height: 45px;
   font-size: 12px;
+  @media (max-width: 485px) {
+    height: 100%;
+  }
 `;
 
 const ImgFilm = styled.img`
@@ -135,7 +151,6 @@ const FavoriteActorsCard: FC<Peoples> = ({
 
   const addNote = () => {
     const newNote: Note = { value: note, id: nextId() };
-    // setNoteList([...noteList, newNote]);
 
     const addNotes = async () => {
       const response = await axios.post(SERVER_URL + "addNote", {
@@ -178,14 +193,14 @@ const FavoriteActorsCard: FC<Peoples> = ({
       <PeopleCardWrapper>
         <PeopleCardContent>
           <ImgAndNameActorWrapper>
-            <ImgAndNameActorContainer>
+            <ImgContainer>
               <Img
                 src={BASE_URL + profile_path + API_KEY}
                 width={160}
                 height={240}
               />
               <CircleOutlined className="closeIcon" onClick={deleteCard} />
-            </ImgAndNameActorContainer>
+            </ImgContainer>
 
             <NameContainer>{name}</NameContainer>
           </ImgAndNameActorWrapper>

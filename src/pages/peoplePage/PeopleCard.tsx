@@ -12,13 +12,6 @@ const PeopleCardWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 30px 15px 30px 15px;
-  /* border: solid 1.9px;
-  border-radius: 15px;
-  transition: all 3s;
-  :hover {
-    transition: 3s;
-    transform: scale(1.1);
-  } */
 `;
 
 const Img = styled.img`
@@ -35,11 +28,6 @@ const NameContainer = styled.div`
   justify-content: center;
   margin: 10px 0 10px 0;
   color: #002640;
-  /* transition: all 3s;
-  :hover {
-    transition: 3s;
-    transform: translateX(-10px);
-  } */
 `;
 
 const SVG = styled.div.attrs((props: { isLiked: boolean }) => props)`

@@ -13,36 +13,40 @@ const SERVER_URL = "http://localhost:3333/";
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "?api_key=cc05b5a727e14d0c6339bc25125883bd";
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 700px;
-  margin: 30px 15px 30px 15px;
-`;
-
-const MovieCardContainer = styled.div`
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  margin: 40px 0 40px 0;
-  justify-content: center;
-  align-items: center;
-`;
-
 const MovieCardWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 30px 0 30px 0;
   width: 100%;
+  @media (max-width: 430px) {
+    width: 80%;
+  }
 `;
 
-const Header = styled.h3`
-  color: #002640;
+const MovieCardContent = styled.div`
   display: flex;
+  margin-bottom: 10px;
+  justify-content: space-around;
+
+  @media (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const ImgAndNameMovieWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  font-size: 17px;
+
+  @media (max-width: 485px) {
+    width: 100%;
+    margin-right: 0;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -55,12 +59,22 @@ const ImgContainer = styled.div`
   }
 `;
 
+const Header = styled.div`
+  color: #002640;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  font-size: 17px;
+  height: 50px;
+`;
+
 const Img = styled.img`
   border-radius: 15px;
   transition: all 0.3s;
   :hover {
     transition: 0.3s;
-    transform: scale(1.1);
+    transform: scale(1.03);
   }
 `;
 
@@ -73,7 +87,7 @@ const Description = styled.div`
     display: none;
   }
   height: 150px;
-  margin: 30px 0 15px 0;
+  margin-top: 45px;
   padding: 0 10px 0 10px;
   opacity: 0.6;
 `;
@@ -82,19 +96,22 @@ const Rating = styled.div`
   display: flex;
   justify-content: center;
   font-size: 17px;
+  margin-top: 15px;
 `;
 
 const DescriptionRatingContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
-  margin-top: 35px;
+  justify-content: space-between;
+  width: 400px;
+  @media (max-width: 430px) {
+    width: 360px;
+  }
 `;
 
 const InputWrapper = styled.div`
   display: flex;
-  width: 100%;
+  margin-top: 20px;
 `;
 
 const CircleOutlined = styled(CloseCircleOutlined)`
@@ -165,9 +182,9 @@ const FavoriteMovieCard: FC<Movies> = ({
 
   return (
     <>
-      <Wrapper>
-        <MovieCardWrapper>
-          <MovieCardContainer>
+      <MovieCardWrapper>
+        <MovieCardContent>
+          <ImgAndNameMovieWrapper>
             <Header>{title}</Header>
             <ImgContainer>
               <Img
@@ -177,7 +194,7 @@ const FavoriteMovieCard: FC<Movies> = ({
               />
               <CircleOutlined className="closeIcon" onClick={deleteCard} />
             </ImgContainer>
-          </MovieCardContainer>
+          </ImgAndNameMovieWrapper>
           <DescriptionRatingContainer>
             <Description>
               <p>{overview}</p>
@@ -186,7 +203,7 @@ const FavoriteMovieCard: FC<Movies> = ({
               <h4>Rating {popularity}</h4>
             </Rating>
           </DescriptionRatingContainer>
-        </MovieCardWrapper>
+        </MovieCardContent>
         <div>
           {noteList.map((note: Note) => {
             return (
@@ -208,7 +225,7 @@ const FavoriteMovieCard: FC<Movies> = ({
             </Button>
           </Input.Group>
         </InputWrapper>
-      </Wrapper>
+      </MovieCardWrapper>
     </>
   );
 };

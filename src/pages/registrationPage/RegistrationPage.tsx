@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import { Form, Input, Select, Checkbox, Button } from "antd";
-import axios from "axios";
 import { RegisrationServices } from "../../services/RegisrationServices";
 import { useHistory } from "react-router-dom";
 
@@ -51,7 +50,6 @@ const RegistrationPage: FC = () => {
   const [form] = Form.useForm();
   const history = useHistory();
   const onFinish = async (values: any) => {
-    // console.log("Received values of form: ", values);
     const response = await RegisrationServices().registrationUser({
       ...values,
     });

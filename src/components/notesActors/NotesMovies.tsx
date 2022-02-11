@@ -1,17 +1,16 @@
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC } from "react";
 import { Note } from "../../pages/peoplePage/PeoplePage";
 import { Button } from "antd";
 import styled from "styled-components";
 
 const NoteContainer = styled.div`
-  width: 680px;
+  width: 96.5%;
   display: flex;
   margin: 5px 0 5px 0;
 `;
 
 const ButtonNote = styled(Button)`
-  /* margin-left: 0%; */
-  margin: 0 10px 0 0;
+  margin-left: 0%;
 `;
 
 interface Props {
