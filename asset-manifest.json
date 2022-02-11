@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.js": "/cinema-magnifier/static/js/main.f94704d2.chunk.js",
-    "main.js.map": "/cinema-magnifier/static/js/main.f94704d2.chunk.js.map",
-    "runtime-main.js": "/cinema-magnifier/static/js/runtime-main.c2b165c9.js",
-    "runtime-main.js.map": "/cinema-magnifier/static/js/runtime-main.c2b165c9.js.map",
-    "static/css/2.a95be28f.chunk.css": "/cinema-magnifier/static/css/2.a95be28f.chunk.css",
-    "static/js/2.041565eb.chunk.js": "/cinema-magnifier/static/js/2.041565eb.chunk.js",
-    "static/js/2.041565eb.chunk.js.map": "/cinema-magnifier/static/js/2.041565eb.chunk.js.map",
-    "static/js/3.1fd77bba.chunk.js": "/cinema-magnifier/static/js/3.1fd77bba.chunk.js",
-    "static/js/3.1fd77bba.chunk.js.map": "/cinema-magnifier/static/js/3.1fd77bba.chunk.js.map",
-    "index.html": "/cinema-magnifier/index.html",
-    "static/css/2.a95be28f.chunk.css.map": "/cinema-magnifier/static/css/2.a95be28f.chunk.css.map",
-    "static/js/2.041565eb.chunk.js.LICENSE.txt": "/cinema-magnifier/static/js/2.041565eb.chunk.js.LICENSE.txt",
-    "static/media/facebook.723b1f1a.svg": "/cinema-magnifier/static/media/facebook.723b1f1a.svg",
-    "static/media/logo.b77c5835.svg": "/cinema-magnifier/static/media/logo.b77c5835.svg",
-    "static/media/mail.55516754.svg": "/cinema-magnifier/static/media/mail.55516754.svg",
-    "static/media/reddit.cb9bbe1a.svg": "/cinema-magnifier/static/media/reddit.cb9bbe1a.svg",
-    "static/media/setting.f919a5f0.svg": "/cinema-magnifier/static/media/setting.f919a5f0.svg"
+    "main.js": "./static/js/main.8887b1c6.chunk.js",
+    "main.js.map": "./static/js/main.8887b1c6.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.65523be9.js",
+    "runtime-main.js.map": "./static/js/runtime-main.65523be9.js.map",
+    "static/css/2.a95be28f.chunk.css": "./static/css/2.a95be28f.chunk.css",
+    "static/js/2.a2097ac8.chunk.js": "./static/js/2.a2097ac8.chunk.js",
+    "static/js/2.a2097ac8.chunk.js.map": "./static/js/2.a2097ac8.chunk.js.map",
+    "static/js/3.22bbb489.chunk.js": "./static/js/3.22bbb489.chunk.js",
+    "static/js/3.22bbb489.chunk.js.map": "./static/js/3.22bbb489.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/2.a95be28f.chunk.css.map": "./static/css/2.a95be28f.chunk.css.map",
+    "static/js/2.a2097ac8.chunk.js.LICENSE.txt": "./static/js/2.a2097ac8.chunk.js.LICENSE.txt",
+    "static/media/facebook.723b1f1a.svg": "./static/media/facebook.723b1f1a.svg",
+    "static/media/logo.b77c5835.svg": "./static/media/logo.b77c5835.svg",
+    "static/media/mail.55516754.svg": "./static/media/mail.55516754.svg",
+    "static/media/reddit.cb9bbe1a.svg": "./static/media/reddit.cb9bbe1a.svg",
+    "static/media/setting.f919a5f0.svg": "./static/media/setting.f919a5f0.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.c2b165c9.js",
+    "static/js/runtime-main.65523be9.js",
     "static/css/2.a95be28f.chunk.css",
-    "static/js/2.041565eb.chunk.js",
-    "static/js/main.f94704d2.chunk.js"
+    "static/js/2.a2097ac8.chunk.js",
+    "static/js/main.8887b1c6.chunk.js"
   ]
 }
