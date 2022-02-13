@@ -113,7 +113,7 @@ const PeoplePage: FC = () => {
 
   const onClickShowMore = () => {
     setPage(page + 1);
-    if (Boolean(query) && query !== "undefined") {
+    if (Boolean(query) && query !== undefined) {
       return dispatch({
         type: fetchSearchPeoples.type,
         payload: { page: page + 1, query },
@@ -131,7 +131,7 @@ const PeoplePage: FC = () => {
 
   const onSearch = useCallback(
     (searchString) => {
-      if (Boolean(searchString) && searchString !== "undefined") {
+      if (Boolean(searchString) && searchString !== undefined) {
         setPage(1);
         return dispatch({
           type: fetchSearchPeoples.type,

@@ -28,7 +28,6 @@ const SignInPage: FC = () => {
     const response = await RegisrationServices().authorizationUser({
       ...values,
     });
-    console.log(response);
 
     if (response.data.isAvtorization) {
       history.push("/");

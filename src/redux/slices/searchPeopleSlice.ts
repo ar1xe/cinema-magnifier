@@ -26,7 +26,6 @@ const searchPeopleSlice = createSlice({
       state,
       action: PayloadAction<GetPeoplesInterface>
     ) => {
-      console.log(action.payload.results);
       return {
         ...state,
         searchPeoples: action.payload.results,

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -122,7 +122,7 @@ const StartPage: FC = () => {
 
   const onClickShowMore = () => {
     setPage(page + 1);
-    if (Boolean(query) && query !== "undefined") {
+    if (Boolean(query) && query !== undefined) {
       return dispatch({
         type: fetchSearchMovies.type,
         payload: { page: page + 1, query },
@@ -140,7 +140,7 @@ const StartPage: FC = () => {
 
   const onSearch = useCallback(
     (searchString) => {
-      if (Boolean(searchString) && searchString !== "undefined") {
+      if (Boolean(searchString) && searchString !== undefined) {
         setPage(1);
         return dispatch({
           type: fetchSearchMovies.type,

@@ -28,8 +28,6 @@ const peoplesSlice = createSlice({
       state,
       action: PayloadAction<GetPeoplesInterface>
     ) => {
-      console.log(action.payload.results);
-
       return {
         ...state,
         peoples:

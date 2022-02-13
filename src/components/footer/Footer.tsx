@@ -8,7 +8,7 @@ import { FooterWrapper, FooterContainer } from "./FooterStyledComponents";
 import { Link } from "react-router-dom";
 import { animateScroll as scroll } from "react-scroll";
 
-const Footer: FC = () => {
+const Footer: FC = React.memo(() => {
   const customScroll = () => {
     scroll.scrollToTop();
   };
@@ -33,6 +33,6 @@ const Footer: FC = () => {
       </FooterContainer>
     </FooterWrapper>
   );
-};
+});
 
 export default Footer;

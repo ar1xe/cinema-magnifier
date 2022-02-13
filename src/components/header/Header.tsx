@@ -10,7 +10,7 @@ import {
 } from "../header/HeaderStyledComponents";
 import { Button } from "antd";
 
-const Header: FC = () => {
+const Header: FC = React.memo(() => {
   return (
     <HeaderWrapper>
       <HeaderContainer>
@@ -44,6 +44,6 @@ const Header: FC = () => {
       </HeaderContainer>
     </HeaderWrapper>
   );
-};
+});
 
 export default Header;

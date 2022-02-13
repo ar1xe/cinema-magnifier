@@ -68,7 +68,7 @@ export const BtnsNavBar = styled.div`
     margin-top: 15px;
     justify-content: space-around;
     button {
-      width: 70px;
+      width: 85px;
       height: 25px;
       font-family: "Roboto", sans-serif;
       font-size: 10px;
