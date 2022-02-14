@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/cinema-magnifier/static/js/main.83f0b1d8.chunk.js",
-    "main.js.map": "/cinema-magnifier/static/js/main.83f0b1d8.chunk.js.map",
+    "main.js": "/cinema-magnifier/static/js/main.a6cadaff.chunk.js",
+    "main.js.map": "/cinema-magnifier/static/js/main.a6cadaff.chunk.js.map",
     "runtime-main.js": "/cinema-magnifier/static/js/runtime-main.257cbbaa.js",
     "runtime-main.js.map": "/cinema-magnifier/static/js/runtime-main.257cbbaa.js.map",
     "static/css/2.a95be28f.chunk.css": "/cinema-magnifier/static/css/2.a95be28f.chunk.css",
@@ -22,6 +22,6 @@
     "static/js/runtime-main.257cbbaa.js",
     "static/css/2.a95be28f.chunk.css",
     "static/js/2.b45c02a8.chunk.js",
-    "static/js/main.83f0b1d8.chunk.js"
+    "static/js/main.a6cadaff.chunk.js"
   ]
 }
