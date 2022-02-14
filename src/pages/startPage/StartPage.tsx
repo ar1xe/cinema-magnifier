@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../redux/saga/actions/movieActions";
 import { getMovies } from "../../redux/selectors/moviesSelectors";
 import FavoriteService from "../../services/FavoriteServices";
-import { getMovieSearch } from "../../redux/selectors/searchMovieSelector";
 import { fetchSearchMovies } from "../../redux/saga/actions/searchMoviesAction";
 import { UpCircleTwoTone } from "@ant-design/icons";
 import { animateScroll as scroll } from "react-scroll";

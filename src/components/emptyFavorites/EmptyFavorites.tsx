@@ -43,7 +43,7 @@ const EmptyFavorites: FC = () => {
           <span> FAVORITES IS EMPTY</span>
         </Header>
 
-        <EmptyIMG rotate={50} />
+        <EmptyIMG spin rotate={50} />
         <ButtonsContainer>
           <Link to="/">
             <Buttons type="link">Movie page</Buttons>
